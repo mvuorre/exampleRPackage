@@ -1,0 +1,33 @@
+---
+title: "Example Analysis of Example Data"
+author: "Matti Vuorre"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The data contained in the exampleDataPackage R package was analyzed exactly like detailed in this document.
+
+First, because the data is contained in a package, we can easily call it from R
+
+```{r}
+library(exampleDataPackage)
+head(exampleData)
+```
+
+We drew a boxplot:
+
+```{r}
+boxplot(score ~ group, data = exampleData)
+```
+
+And conducted a t-test:
+
+```{r}
+t.test(score ~ group, data = exampleData)
+```
+
+Thank you for reading.
