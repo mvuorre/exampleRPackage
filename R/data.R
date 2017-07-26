@@ -2,7 +2,7 @@
 #'
 #' A data set with the scores of two groups, Group A and Group B.
 #'
-#' @format A data frame with 53940 rows and 10 variables:
+#' @format A data frame with 60 rows and 2 variables:
 #' \describe{
 #'   \item{group}{Participant's group, A or B.}
 #'   \item{score}{The participant's score in hypothetical task Z.}
