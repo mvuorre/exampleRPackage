@@ -3,7 +3,8 @@ output:
   github_document:
     toc: true
     toc_depth: 2
-bibliography: ~/Documents/active/exampleDataPackage/README-references.bib
+# To build pkgdown this needs to be absolute path
+bibliography: README-references.bib
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
