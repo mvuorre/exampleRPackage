@@ -74,7 +74,7 @@ Create a new R package with R Studio
 
 First, use R Studio to create a new R Project. While creating the project, make sure to create the project as an R Package:
 
-![image-create-project](README-rstudio-create-project.png)
+<img src="README-rstudio-create-project.png" width="861" />
 
 Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this:
 
@@ -107,8 +107,8 @@ We will also go through advanced (optional) steps.
 
 1.  Sharing the package
     -   Upload it to GitHub so it is easily available to anyone (R user or otherwise)
-    -   Mint a DOI for citeability and longevity
-    -   Connect to Open Science Framework
+    -   Mint a DOI for citeability and longevity (todo)
+    -   Connect to Open Science Framework (todo)
 2.  Document data analysis as package vignette
     -   Creates a readable .html file showing how the data is (or could be) analyzed
 3.  Create a website for the data package
@@ -214,7 +214,7 @@ Each line begins with a `#'`. The first line is a short description of the data.
 
 It is important to document data well and precisely so there is never any ambiguity in the meaning of variables, where the data is from, etc. You should therefore spend some time writing this documentation file. Once the package has been built, this documentation can be viewed in R by calling (for this example data called `exampleData`) `?exampleData`:
 
-![example-rdocumentation](README-exampleData-rdocumentation.png)
+<img src="README-exampleData-rdocumentation.png" width="628" />
 
 Once you are done writing your description, you can use the `document()` helper function:
 
@@ -249,9 +249,6 @@ The easiest way to share the data product is to create the R package as a Git re
 
 ``` r
 devtools::install_github("mvuorre/exampleDataPackage")
-#> Downloading GitHub repo mvuorre/exampleDataPackage@master
-#> from URL https://api.github.com/repos/mvuorre/exampleDataPackage/zipball/master
-#> Installation failed: Not Found (404)
 ```
 
 The above command, when executed in R, downloads and installs the `exampleDataPackage` from GitHub user `mvuorre`. You can view this example data package on GitHub: <https://github.com/mvuorre/exampleDataPackage>.
