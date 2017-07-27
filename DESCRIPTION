@@ -6,6 +6,8 @@ Authors@R: person("Matti", "Vuorre", email = "mv2521@columbia.edu",
                   role = c("aut", "cre"))
 Maintainer: Matti Vuorre <mv2521@columbia.edu>
 Description: This package is a minimal example of an R data package.
+URL: https://github.com/mvuorre/exampleDataPackage/
+BugReports: http://github.com/mvuorre/exampleDataPackage/issues/
 License: MIT + file LICENSE
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
