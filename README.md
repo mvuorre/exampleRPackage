@@ -72,8 +72,9 @@ The following is a short tutorial on how to create R data packages. The outline 
 3.  [Add the data in appropriate locations](#add-data)
     -   Raw data, preprocessing scripts, R data object
 4.  [Document the data and package](#document-the-data-and-package)
+    -   Ensure that users understand what the data and variables mean, and how to use it
 
-After these three simple steps, you will have a reproducible data package on your computer. It will be easy for you to use from within R (or otherwise), and because it is documented you will never forget what was done and how.
+After these simple steps, you will have a reproducible data package on your computer. It will be easy for you to use from within R (or otherwise), and because it is documented you will never forget what was done and how.
 
 We will also go through advanced (optional) steps.
 
