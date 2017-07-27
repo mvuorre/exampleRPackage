@@ -35,7 +35,14 @@
   <a href="articles/index.html">Articles</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/mvuorre/exampleDataPackage/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -52,14 +59,15 @@
     
 <div class="contents">
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <div id="exampledatapackage" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#exampledatapackage" class="anchor"></a>exampleDataPackage</h1></div>
-
+<p>This is the Git(Hub) repository of an example data package. In <a href="https://github.com/mvuorre/reproguide-dataproduct">our manuscript</a> (not yet available), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.</p>
 <div id="how-to-download-the-raw-data-manually" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-download-the-raw-data-manually" class="anchor"></a>How to download the raw data manually</h2>
-<p>The “raw data” used here is simulated for this particular example for illustration purposes.</p>
+<p>The “raw data” in this package is simulated for illustration purposes.</p>
 <p>You will find all the raw data as .csv files in the <a href="https://github.com/mvuorre/exampleDataPackage/tree/master/data-raw"><code>data-raw/</code></a> folder, from where they can be downloaded. That folder also contains full pre-processing instructions in the form of an R script.</p>
 </div>
 <div id="how-to-obtain-the-data-from-within-r" class="section level2">
@@ -80,11 +88,58 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <span class="co">#&gt; 5     a  97.22694</span>
 <span class="co">#&gt; 6     a  94.33976</span></code></pre></div>
 <p>The rest of this README file describes briefly how to create R data packages. For more in-depth instructions, please refer to our <a href="https://github.com/mvuorre/reproguide-dataproduct">manuscript</a>. In writing this online tutorial, we relied heavily on Hadley Wickham’s “R Packages”, which is an excellent source of information on creating R packages <span class="citation">(Wickham 2015)</span>.</p>
+<hr>
 </div>
 </div>
 <div id="how-to-create-an-r-data-package" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-to-create-an-r-data-package" class="anchor"></a>How to Create an R Data Package</h1>
+<p>The following is a short tutorial on how to create R data packages. The outline of the tutorial is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>
+<a href="#create-a-new-r-package-with-r-studio">Create a new R package with R Studio</a>
+<ul>
+<li>With a few button clicks, this automatically sets up the underlying software infrastructure</li>
+</ul>
+</li>
+<li>
+<a href="#describe-the-package">Describe the package</a>
+<ul>
+<li>DESCRIPTION and README files</li>
+</ul>
+</li>
+<li>
+<a href="#add-data">Add the data in appropriate locations</a>
+<ul>
+<li>Raw data, preprocessing scripts, R data object</li>
+</ul>
+</li>
+<li><a href="#document-the-data-and-package">Document the data and package</a></li>
+</ol>
+<p>After these three simple steps, you will have a reproducible data package on your computer. It will be easy for you to use from within R (or otherwise), and because it is documented you will never forget what was done and how.</p>
+<p>We will also go through advanced (optional) steps.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>
+<a href="#sharing-the-data-package">Sharing the data package</a>
+<ul>
+<li>Upload it to GitHub so it is easily available to anyone (R user or otherwise)</li>
+<li>Mint a DOI for citeability and longevity (todo)</li>
+<li>Connect to Open Science Framework (todo)</li>
+</ul>
+</li>
+<li>
+<a href="#documenting-analysis-as-package-vignette">Document data analysis as package vignette</a>
+<ul>
+<li>Creates a readable .html file showing how the data is (or could be) analyzed</li>
+</ul>
+</li>
+<li>
+<a href="#creating-a-website-for-the-data-package">Create a website for the data package</a>
+<ul>
+<li>Showcase your data and analysis online with a neat (and easy to create) website</li>
+</ul>
+</li>
+</ol>
 <p>If you have not yet collected your data (<em>you need data for a data package</em>), it is a good idea to set up the package, as described here and in the <a href="https://github.com/mvuorre/reproguide-dataproduct">manuscript</a>, before any data is collected. Then, whenever new data arrives, you can place it in the correct folder and update the data package. Alternatively, if you already have data, you can create the data package and move all the data into the correct folder when required.</p>
 <p>You will need one R package (R developer tools) to follow these instructions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</code></pre></div>
@@ -94,52 +149,20 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <a href="#create-a-new-r-package-with-r-studio" class="anchor"></a>Create a new R package with R Studio</h2>
 <p>First, use R Studio to create a new R Project. While creating the project, make sure to create the project as an R Package:</p>
 <p><img src="README-rstudio-create-project.png" width="861"></p>
-<p>Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project’s files and folders look like this:</p>
+<p>Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project’s files and folders look like this (<code>exampleDataPackage</code> is the project’s root folder):</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">exampleDataPackage/</span>
-    <span class="kw">|</span><span class="ex">--</span> man/
-    <span class="kw">|</span><span class="ex">--</span> R/
-    <span class="ex">DESCRIPTION</span>
-    <span class="ex">NAMESPACE</span>
-    <span class="ex">exampleDataPackage.Rproj</span>
-    <span class="ex">.gitignore</span>
-    <span class="ex">.Rbuildignore</span></code></pre></div>
+├── <span class="ex">man/</span>
+<span class="kw">|</span>   └── <span class="ex">hello.Rd</span>
+├── <span class="ex">R/</span>
+<span class="kw">|</span>   └── <span class="ex">hello.R</span>
+├── <span class="ex">DESCRIPTION</span>
+├── <span class="ex">NAMESPACE</span>
+├── <span class="ex">exampleDataPackage.Rproj</span>
+├── <span class="ex">.gitignore</span>
+└── <span class="ex">.Rbuildignore</span></code></pre></div>
 <p><code>man/</code> is the “manuals” folder which will have files documenting the package. <code>R/</code> is a folder for any R function files. <code>DESCRIPTION</code> is a file describing the package, and <code>NAMESPACE</code> its functions. <code>exampleDataPackage.Rproj</code> identifies the folder as an R package. <code>.gitignore</code> and <code>.Rbuildignore</code> are hidden files, and specify which files should be ignored for Git operations, and R package building operations, respectively. The last three files can be safely ignored.</p>
 <p>At this point, you can delete <code>man/hello.Rd</code> and <code>R/hello.R</code>. These two files are examples of R function files and R documentation files.</p>
 <p>This is already a fully functional R package (although it contains nothing so it’s pretty useless.) We now need to make a few changes to turn it into an R data package. In short, we will create a minimal data package.</p>
-<ol style="list-style-type: decimal">
-<li>Describe the package
-<ul>
-<li>DESCRIPTION and README files</li>
-</ul>
-</li>
-<li>Add the data in appropriate locations
-<ul>
-<li>Raw data, preprocessing scripts, R data object</li>
-</ul>
-</li>
-<li>Document the data and package</li>
-</ol>
-<p>After these three simple steps, you will have a reproducible data package on your computer. It will be easy for you to use from within R (or otherwise), and because it is documented you will never forget what was done and how.</p>
-<p>We will also go through advanced (optional) steps.</p>
-<ol start="4" style="list-style-type: decimal">
-<li>Sharing the package
-<ul>
-<li>Upload it to GitHub so it is easily available to anyone (R user or otherwise)</li>
-<li>Mint a DOI for citeability and longevity (todo)</li>
-<li>Connect to Open Science Framework (todo)</li>
-</ul>
-</li>
-<li>Document data analysis as package vignette
-<ul>
-<li>Creates a readable .html file showing how the data is (or could be) analyzed</li>
-</ul>
-</li>
-<li>Create a website for the data package
-<ul>
-<li>Showcase your data and analysis online with a beautiful (and easy to create) website</li>
-</ul>
-</li>
-</ol>
 </div>
 <div id="describe-the-package" class="section level2">
 <h2 class="hasAnchor">
@@ -179,7 +202,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 </div>
 <div id="add-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#add-data" class="anchor"></a>Add Data</h2>
+<a href="#add-data" class="anchor"></a>Add data</h2>
 <p>First, we will add the raw data to its appropriate location (a <code>data-raw/</code> folder inside the project). You should use this helper function from devtools to create the folder, so that it is also appropriately handled when R builds the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">use_data_raw</span>()</code></pre></div>
 <p>You can then put all the raw data files to <code>data-raw/</code>. For this exampleDataPackage, we simulated some simple example data, and therefore also put the R script that simulated the data and created the data files in the same folder.</p>
@@ -187,9 +210,9 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">use_data</span>(exampleData)</code></pre></div>
 <p>The above command assumes that your preprocessing results in an R data object called exampleData; you can change it to whatever you’d like. The <code>use_data()</code> function will save the R data object into <code>data/</code>. This means that your R package now includes a data set called <code>exampleData</code>.</p>
 </div>
-<div id="document-the-data" class="section level2">
+<div id="document-the-data-and-package" class="section level2">
 <h2 class="hasAnchor">
-<a href="#document-the-data" class="anchor"></a>Document the data</h2>
+<a href="#document-the-data-and-package" class="anchor"></a>Document the data and package</h2>
 <p>R users are familiar with reading function documentation by typing <code>?mean</code> in the R console. That reveals the documentation page for the <code>mean()</code> function. By adding a documentation file, your data object will also have a documentation page, which is easily accessible from within R.</p>
 <p>To document your data set, create a file called <code>data.R</code> in the <code>R</code> folder. Then, use the (roxygen2 <span class="citation">(Wickham, Danenberg, and Eugster 2017)</span>) documentation syntax to write your data object’s documentation in the <code>R/data.R</code> file. It will look something like the following for our <code>exampleData</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#' Scores of Group A and Group B.</span>
@@ -226,23 +249,23 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="advanced-optional-steps" class="section level1">
 <h1 class="hasAnchor">
 <a href="#advanced-optional-steps" class="anchor"></a>Advanced (optional) steps</h1>
-<div id="sharing-the-data-product" class="section level2">
+<div id="sharing-the-data-package" class="section level2">
 <h2 class="hasAnchor">
-<a href="#sharing-the-data-product" class="anchor"></a>Sharing the data product</h2>
+<a href="#sharing-the-data-package" class="anchor"></a>Sharing the data package</h2>
 <p>The easiest way to share the data product is to create the R package as a Git repository (see our tutorial on Git + GitHub: <a href="https://github.com/mvuorre/reproguide-curate" class="uri">https://github.com/mvuorre/reproguide-curate</a> <span class="citation">(Vuorre and Curley 2017)</span>) and share it on GitHub. Once the R package’s source code is pushed to GitHub, authorized users (by default, anyone) can browse it on GitHub and manually download any files they’d like (e.g. the raw data files.) Importantly, they can obtain the data very easily from within R by installing the R package you have just created:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"mvuorre/exampleDataPackage"</span>)</code></pre></div>
 <p>The above command, when executed in R, downloads and installs the <code>exampleDataPackage</code> from GitHub user <code>mvuorre</code>. You can view this example data package on GitHub: <a href="https://github.com/mvuorre/exampleDataPackage" class="uri">https://github.com/mvuorre/exampleDataPackage</a>.</p>
 </div>
-<div id="documenting-analysis-as-vignette" class="section level2">
+<div id="documenting-analysis-as-package-vignette" class="section level2">
 <h2 class="hasAnchor">
-<a href="#documenting-analysis-as-vignette" class="anchor"></a>Documenting analysis as vignette</h2>
+<a href="#documenting-analysis-as-package-vignette" class="anchor"></a>Documenting analysis as package vignette</h2>
 <p>It is also helpful to share the full analysis code in which the data was used. We recommend writing analyses with R Markdown. R Markdown files can easily be turned into an <em>R package vignette</em>. To initiate a vignette, use</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">use_vignette</span>(<span class="st">"Example-Analysis"</span>)</code></pre></div>
 <p>This creates a vignette template into the <code>vignettes/</code> folder. Write your analysis into the <code>.Rmd</code> file. See <code>vignettes/Example-Analysis.Rmd</code> for an example. Writing your analysis into a vignette ensures that users of the data also have access to the original analysis of the data. Furthermore, vignettes can be built into the package’s website.</p>
 </div>
-<div id="creating-a-website-for-the-r-data-package" class="section level2">
+<div id="creating-a-website-for-the-data-package" class="section level2">
 <h2 class="hasAnchor">
-<a href="#creating-a-website-for-the-r-data-package" class="anchor"></a>Creating a website for the R data package</h2>
+<a href="#creating-a-website-for-the-data-package" class="anchor"></a>Creating a website for the data package</h2>
 <p>You can even create a website for the data package. For this, you need the <a href="https://hadley.github.io/pkgdown/">pkgdown</a> R package <span class="citation">(Wickham 2017)</span>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"hadley/pkgdown"</span>)</code></pre></div>
@@ -311,7 +334,14 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>License</h2>
+    <h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/mvuorre/exampleDataPackage/">https://​github.com/​mvuorre/​exampleDataPackage/​</a>
+</li>
+<li>Report a bug at <br><a href="http://github.com/mvuorre/exampleDataPackage/issues/">http://​github.com/​mvuorre/​exampleDataPackage/​issues/​</a>
+</li>
+</ul>
+<h2>License</h2>
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
@@ -319,7 +349,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mvuorre/reproguide-dataproduct">our manuscript</a></li>
+<li><a href="https://github.com/mvuorre/exampleDataPackage">available on GitHub</a></li>
 </ul>
 </div>
 

@@ -5,26 +5,28 @@
 -   [How to Create an R Data Package](#how-to-create-an-r-data-package)
     -   [Create a new R package with R Studio](#create-a-new-r-package-with-r-studio)
     -   [Describe the package](#describe-the-package)
-    -   [Add Data](#add-data)
-    -   [Document the data](#document-the-data)
+    -   [Add data](#add-data)
+    -   [Document the data and package](#document-the-data-and-package)
 -   [Advanced (optional) steps](#advanced-optional-steps)
-    -   [Sharing the data product](#sharing-the-data-product)
-    -   [Documenting analysis as vignette](#documenting-analysis-as-vignette)
-    -   [Creating a website for the R data package](#creating-a-website-for-the-r-data-package)
+    -   [Sharing the data package](#sharing-the-data-package)
+    -   [Documenting analysis as package vignette](#documenting-analysis-as-package-vignette)
+    -   [Creating a website for the data package](#creating-a-website-for-the-data-package)
 -   [Further Reading](#further-reading)
     -   [Online Resources](#online-resources)
     -   [References](#references)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+exampleDataPackage is an example R data package [available on GitHub](https://github.com/mvuorre/exampleDataPackage).
+
 exampleDataPackage
 ==================
 
-This is the Git(Hub) repository of an example data package. In [our manuscript](https://github.com/mvuorre/reproguide-dataproduct), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be inspected for details of the implementation.
+This is the Git(Hub) repository of an example data package. In [our manuscript](https://github.com/mvuorre/reproguide-dataproduct) (not yet available), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.
 
 How to download the raw data manually
 -------------------------------------
 
-The "raw data" used here is simulated for this particular example for illustration purposes.
+The "raw data" in this package is simulated for illustration purposes.
 
 You will find all the raw data as .csv files in the [`data-raw/`](https://github.com/mvuorre/exampleDataPackage/tree/master/data-raw) folder, from where they can be downloaded. That folder also contains full pre-processing instructions in the form of an R script.
 
@@ -56,8 +58,33 @@ head(exampleData)
 
 The rest of this README file describes briefly how to create R data packages. For more in-depth instructions, please refer to our [manuscript](https://github.com/mvuorre/reproguide-dataproduct). In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages (Wickham 2015).
 
+------------------------------------------------------------------------
+
 How to Create an R Data Package
 ===============================
+
+The following is a short tutorial on how to create R data packages. The outline of the tutorial is as follows:
+
+1.  [Create a new R package with R Studio](#create-a-new-r-package-with-r-studio)
+    -   With a few button clicks, this automatically sets up the underlying software infrastructure
+2.  [Describe the package](#describe-the-package)
+    -   DESCRIPTION and README files
+3.  [Add the data in appropriate locations](#add-data)
+    -   Raw data, preprocessing scripts, R data object
+4.  [Document the data and package](#document-the-data-and-package)
+
+After these three simple steps, you will have a reproducible data package on your computer. It will be easy for you to use from within R (or otherwise), and because it is documented you will never forget what was done and how.
+
+We will also go through advanced (optional) steps.
+
+1.  [Sharing the data package](#sharing-the-data-package)
+    -   Upload it to GitHub so it is easily available to anyone (R user or otherwise)
+    -   Mint a DOI for citeability and longevity (todo)
+    -   Connect to Open Science Framework (todo)
+2.  [Document data analysis as package vignette](#documenting-analysis-as-package-vignette)
+    -   Creates a readable .html file showing how the data is (or could be) analyzed
+3.  [Create a website for the data package](#creating-a-website-for-the-data-package)
+    -   Showcase your data and analysis online with a neat (and easy to create) website
 
 If you have not yet collected your data (*you need data for a data package*), it is a good idea to set up the package, as described here and in the [manuscript](https://github.com/mvuorre/reproguide-dataproduct), before any data is collected. Then, whenever new data arrives, you can place it in the correct folder and update the data package. Alternatively, if you already have data, you can create the data package and move all the data into the correct folder when required.
 
@@ -76,17 +103,19 @@ First, use R Studio to create a new R Project. While creating the project, make 
 
 <img src="README-rstudio-create-project.png" width="861" />
 
-Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this:
+Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this (`exampleDataPackage` is the project's root folder):
 
 ``` bash
 exampleDataPackage/
-    |-- man/
-    |-- R/
-    DESCRIPTION
-    NAMESPACE
-    exampleDataPackage.Rproj
-    .gitignore
-    .Rbuildignore
+├── man/
+|   └── hello.Rd
+├── R/
+|   └── hello.R
+├── DESCRIPTION
+├── NAMESPACE
+├── exampleDataPackage.Rproj
+├── .gitignore
+└── .Rbuildignore
 ```
 
 `man/` is the "manuals" folder which will have files documenting the package. `R/` is a folder for any R function files. `DESCRIPTION` is a file describing the package, and `NAMESPACE` its functions. `exampleDataPackage.Rproj` identifies the folder as an R package. `.gitignore` and `.Rbuildignore` are hidden files, and specify which files should be ignored for Git operations, and R package building operations, respectively. The last three files can be safely ignored.
@@ -94,25 +123,6 @@ exampleDataPackage/
 At this point, you can delete `man/hello.Rd` and `R/hello.R`. These two files are examples of R function files and R documentation files.
 
 This is already a fully functional R package (although it contains nothing so it's pretty useless.) We now need to make a few changes to turn it into an R data package. In short, we will create a minimal data package.
-
-1.  Describe the package
-    -   DESCRIPTION and README files
-2.  Add the data in appropriate locations
-    -   Raw data, preprocessing scripts, R data object
-3.  Document the data and package
-
-After these three simple steps, you will have a reproducible data package on your computer. It will be easy for you to use from within R (or otherwise), and because it is documented you will never forget what was done and how.
-
-We will also go through advanced (optional) steps.
-
-1.  Sharing the package
-    -   Upload it to GitHub so it is easily available to anyone (R user or otherwise)
-    -   Mint a DOI for citeability and longevity (todo)
-    -   Connect to Open Science Framework (todo)
-2.  Document data analysis as package vignette
-    -   Creates a readable .html file showing how the data is (or could be) analyzed
-3.  Create a website for the data package
-    -   Showcase your data and analysis online with a beautiful (and easy to create) website
 
 Describe the package
 --------------------
@@ -167,7 +177,7 @@ use_readme_rmd()
 
 You can then write a description of the package (what is it, why does it exist, who created it, who to contact, etc.) Make changes to `README.Rmd` with R Studio's text editor. When you are done, click Knit in R Studio.
 
-Add Data
+Add data
 --------
 
 First, we will add the raw data to its appropriate location (a `data-raw/` folder inside the project). You should use this helper function from devtools to create the folder, so that it is also appropriately handled when R builds the package:
@@ -186,8 +196,8 @@ use_data(exampleData)
 
 The above command assumes that your preprocessing results in an R data object called exampleData; you can change it to whatever you'd like. The `use_data()` function will save the R data object into `data/`. This means that your R package now includes a data set called `exampleData`.
 
-Document the data
------------------
+Document the data and package
+-----------------------------
 
 R users are familiar with reading function documentation by typing `?mean` in the R console. That reveals the documentation page for the `mean()` function. By adding a documentation file, your data object will also have a documentation page, which is easily accessible from within R.
 
@@ -242,7 +252,7 @@ Of course, if you just wanted to use your own data right now, there is little po
 Advanced (optional) steps
 =========================
 
-Sharing the data product
+Sharing the data package
 ------------------------
 
 The easiest way to share the data product is to create the R package as a Git repository (see our tutorial on Git + GitHub: <https://github.com/mvuorre/reproguide-curate> (Vuorre and Curley 2017)) and share it on GitHub. Once the R package's source code is pushed to GitHub, authorized users (by default, anyone) can browse it on GitHub and manually download any files they'd like (e.g. the raw data files.) Importantly, they can obtain the data very easily from within R by installing the R package you have just created:
@@ -253,8 +263,8 @@ devtools::install_github("mvuorre/exampleDataPackage")
 
 The above command, when executed in R, downloads and installs the `exampleDataPackage` from GitHub user `mvuorre`. You can view this example data package on GitHub: <https://github.com/mvuorre/exampleDataPackage>.
 
-Documenting analysis as vignette
---------------------------------
+Documenting analysis as package vignette
+----------------------------------------
 
 It is also helpful to share the full analysis code in which the data was used. We recommend writing analyses with R Markdown. R Markdown files can easily be turned into an *R package vignette*. To initiate a vignette, use
 
@@ -264,8 +274,8 @@ devtools::use_vignette("Example-Analysis")
 
 This creates a vignette template into the `vignettes/` folder. Write your analysis into the `.Rmd` file. See `vignettes/Example-Analysis.Rmd` for an example. Writing your analysis into a vignette ensures that users of the data also have access to the original analysis of the data. Furthermore, vignettes can be built into the package's website.
 
-Creating a website for the R data package
------------------------------------------
+Creating a website for the data package
+---------------------------------------
 
 You can even create a website for the data package. For this, you need the [pkgdown](https://hadley.github.io/pkgdown/) R package (Wickham 2017):
 
