@@ -20,7 +20,7 @@ exampleDataPackage is an example R data package [available on GitHub](https://gi
 
 # exampleDataPackage
 
-This is the Git(Hub) repository of an example data package. In [our manuscript](https://github.com/mvuorre/reproguide-dataproduct) (not yet available), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.
+This is the Git(Hub) repository of an example data package. In our manuscript (not yet available), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.
 
 ## How to download the raw data manually
 
@@ -46,7 +46,7 @@ library(exampleDataPackage)
 head(exampleData)
 ```
 
-The rest of this README file describes briefly how to create R data packages. For more in-depth instructions, please refer to our [manuscript](https://github.com/mvuorre/reproguide-dataproduct). In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
+The rest of this README file describes briefly how to create R data packages. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
 
 ---
 
@@ -76,7 +76,7 @@ We will also go through advanced (optional) steps.
 7. [Create a website for the data package](#creating-a-website-for-the-data-package)
     - Showcase your data and analysis online with a neat (and easy to create) website
 
-If you have not yet collected your data (*you need data for a data package*), it is a good idea to set up the package, as described here and in the [manuscript](https://github.com/mvuorre/reproguide-dataproduct), before any data is collected. Then, whenever new data arrives, you can place it in the correct folder and update the data package. Alternatively, if you already have data, you can create the data package and move all the data into the correct folder when required.
+If you have not yet collected your data (*you need data for a data package*), it is a good idea to set up the package before any data is collected. Then, whenever new data arrives, you can place it in the correct folder and update the data package. Alternatively, if you already have data, you can create the data package and move all the data into the correct folder when required.
 
 You will need one R package (R developer tools) to follow these instructions:
 

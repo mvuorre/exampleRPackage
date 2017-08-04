@@ -63,7 +63,7 @@
 <div id="exampledatapackage" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#exampledatapackage" class="anchor"></a>exampleDataPackage</h1></div>
-<p>This is the Git(Hub) repository of an example data package. In <a href="https://github.com/mvuorre/reproguide-dataproduct">our manuscript</a> (not yet available), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.</p>
+<p>This is the Git(Hub) repository of an example data package. In our manuscript (not yet available), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.</p>
 <div id="how-to-download-the-raw-data-manually" class="section level2">
 <h2 class="hasAnchor">
 <a href="#how-to-download-the-raw-data-manually" class="anchor"></a>How to download the raw data manually</h2>
@@ -87,7 +87,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <span class="co">#&gt; 4     a 102.70070</span>
 <span class="co">#&gt; 5     a  97.22694</span>
 <span class="co">#&gt; 6     a  94.33976</span></code></pre></div>
-<p>The rest of this README file describes briefly how to create R data packages. For more in-depth instructions, please refer to our <a href="https://github.com/mvuorre/reproguide-dataproduct">manuscript</a>. In writing this online tutorial, we relied heavily on Hadley Wickham’s “R Packages”, which is an excellent source of information on creating R packages <span class="citation">(Wickham 2015)</span>.</p>
+<p>The rest of this README file describes briefly how to create R data packages. In writing this online tutorial, we relied heavily on Hadley Wickham’s “R Packages”, which is an excellent source of information on creating R packages <span class="citation">(Wickham 2015)</span>.</p>
 <hr>
 </div>
 </div>
@@ -145,7 +145,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 </ul>
 </li>
 </ol>
-<p>If you have not yet collected your data (<em>you need data for a data package</em>), it is a good idea to set up the package, as described here and in the <a href="https://github.com/mvuorre/reproguide-dataproduct">manuscript</a>, before any data is collected. Then, whenever new data arrives, you can place it in the correct folder and update the data package. Alternatively, if you already have data, you can create the data package and move all the data into the correct folder when required.</p>
+<p>If you have not yet collected your data (<em>you need data for a data package</em>), it is a good idea to set up the package before any data is collected. Then, whenever new data arrives, you can place it in the correct folder and update the data package. Alternatively, if you already have data, you can create the data package and move all the data into the correct folder when required.</p>
 <p>You will need one R package (R developer tools) to follow these instructions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)</code></pre></div>
 <p>The <strong>devtools</strong> package <span class="citation">(Wickham and Chang 2017)</span> contains helpful functions for creating the R data package.</p>
