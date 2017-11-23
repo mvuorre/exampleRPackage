@@ -7,5 +7,5 @@
 #'   \item{group}{Participant's group, A or B.}
 #'   \item{score}{The participant's score in hypothetical task Z.}
 #' }
-#' @source \url{https://www.github.com/mvuorre/exampleDataPackage}
+#' @source \url{https://www.github.com/mvuorre/exampleRPackage}
 "exampleData"

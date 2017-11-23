@@ -16,37 +16,40 @@ knitr::opts_chunk$set(
 )
 ```
 
-exampleDataPackage is an example R data package [available on GitHub](https://github.com/mvuorre/exampleDataPackage).
+# exampleRPackage
 
-# exampleDataPackage
+exampleRPackage is an example R package [available on GitHub](https://github.com/mvuorre/exampleRPackage).
 
-This is the Git(Hub) repository of an example data package. In our manuscript (not yet available), we describe why and how researchers might choose to share their data as R data packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.
+
+This is the Git(Hub) repository of an example R package. In our manuscript (not yet available), we describe why and how researchers might choose to share their research products[^1] as R packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.
+
+[^1]: By "product", we mean any combination of text (manuscripts), code, data, stimuli, and other research materials.
 
 ## How to download the raw data manually
 
 The "raw data" in this package is simulated for illustration purposes. 
 
-You will find all the raw data as .csv files in the [`data-raw/`](https://github.com/mvuorre/exampleDataPackage/tree/master/data-raw) folder, from where they can be downloaded. That folder also contains full pre-processing instructions in the form of an R script.
+You will find all the raw data as .csv files in the [`data-raw/`](https://github.com/mvuorre/exampleRPackage/tree/master/data-raw) folder, from where they can be downloaded. That folder also contains full pre-processing instructions in the form of an R script.
 
 ## How to obtain the data from within R
 
-One major benefit of wrapping the data into an R data package is its easy availability from within R. No more wasted time looking around the computer's hard drive for the correct data files!
+One major benefit of wrapping the data into an R package is its easy availability from within R. No more wasted time looking around the computer's hard drive for the correct data files!
 
-Because the exampleDataPackage is hosted on GitHub, you can easily download it from within R:
+Because the exampleRPackage is hosted on GitHub, you can easily download it from within R:
 
 ```{r, eval = FALSE}
 # install.packages("devtools")  # Install this package if necessary
-devtools::install_github("mvuorre/exampleDataPackage")
+devtools::install_github("mvuorre/exampleRPackage")
 ```
 
 After the package finished installing (a few seconds), you can make the data in the package available in an R session:
 
 ```{r}
-library(exampleDataPackage)
+library(exampleRPackage)
 head(exampleData)
 ```
 
-The rest of this README file describes briefly how to create R data packages. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
+The rest of this README file describes briefly how to create R packages. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
 
 ---
 
@@ -97,19 +100,19 @@ knitr::include_graphics("README-rstudio-create-project.png", dpi = 360)
 Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this (`exampleDataPackage` is the project's root folder):
 
 ```bash
-exampleDataPackage/
+exampleRPackage/
 ├── man/
 |   └── hello.Rd
 ├── R/
 |   └── hello.R
 ├── DESCRIPTION
 ├── NAMESPACE
-├── exampleDataPackage.Rproj
+├── exampleRPackage.Rproj
 ├── .gitignore
 └── .Rbuildignore
 ```
 
-`man/` is the "manuals" folder which will have files documenting the package. `R/` is a folder for any R function files. `DESCRIPTION` is a file describing the package, and `NAMESPACE` its functions. `exampleDataPackage.Rproj` identifies the folder as an R package. `.gitignore` and `.Rbuildignore` are hidden files, and specify which files should be ignored for Git operations, and R package building operations, respectively. The last three files can be safely ignored.
+`man/` is the "manuals" folder which will have files documenting the package. `R/` is a folder for any R function files. `DESCRIPTION` is a file describing the package, and `NAMESPACE` its functions. `exampleRPackage.Rproj` identifies the folder as an R package. `.gitignore` and `.Rbuildignore` are hidden files, and specify which files should be ignored for Git operations, and R package building operations, respectively. The last three files can be safely ignored.
 
 At this point, you can delete `man/hello.Rd` and `R/hello.R`. These two files are examples of R function files and R documentation files.
 
@@ -120,7 +123,7 @@ This is already a fully functional R package (although it contains nothing so it
 The `DESCRIPTION` file includes crucial information about the package in standard format. When you create an R package with R Studio, the process automatically creates this file with example content:
 
 ```bash
-Package: exampleDataPackage
+Package: exampleRPackage
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
@@ -136,14 +139,14 @@ LazyData: true
 Modify this file to something like the following (note you only need to change a few lines):
 
 ```bash
-Package: exampleDataPackage
+Package: exampleRPackage
 Type: Package
-Title: An example R data package
+Title: An example R package
 Version: 0.1.0
 Authors@R: person("Matti", "Vuorre", email = "mv2521@columbia.edu",
                   role = c("aut", "cre"))
 Maintainer: Matti Vuorre <mv2521@columbia.edu>
-Description: This package is a minimal example of an R data package.
+Description: This package is an example R package.
 License: What license is it under?
 Depends: R (>= 3.1.0)
 Encoding: UTF-8
@@ -177,7 +180,7 @@ First, we will add the raw data to its appropriate location (a `data-raw/` folde
 use_data_raw()
 ```
 
-You can then put all the raw data files to `data-raw/`. For this exampleDataPackage, we simulated some simple example data, and therefore also put the R script that simulated the data and created the data files in the same folder.
+You can then put all the raw data files to `data-raw/`. For this exampleRPackage, we simulated some simple example data, and therefore also put the R script that simulated the data and created the data files in the same folder.
 
 Then, move (or create) any pre-processing scripts or instructions to the same `data-raw/` folder. Doing so will allow for exact reproduction of the final data set. The pre-processing should output two files: One an easily downloadable .csv file, and also an R data object. To create the R data object, include the following at the end of your pre-processing script (or run in the console once you have completed pre-processing):
 
@@ -241,10 +244,10 @@ Of course, if you just wanted to use your own data right now, there is little po
 The easiest way to share the data product is to create the R package as a Git repository (see our tutorial on Git + GitHub: <https://github.com/mvuorre/reproguide-curate> [@vuorre_curating_2017]) and share it on GitHub. Once the R package's source code is pushed to GitHub, authorized users (by default, anyone) can browse it on GitHub and manually download any files they'd like (e.g. the raw data files.) Importantly, they can obtain the data very easily from within R by installing the R package you have just created:
 
 ```{r, eval = FALSE}
-devtools::install_github("mvuorre/exampleDataPackage")
+devtools::install_github("mvuorre/exampleRPackage")
 ```
 
-The above command, when executed in R, downloads and installs the `exampleDataPackage` from GitHub user `mvuorre`. You can view this example data package on GitHub: <https://github.com/mvuorre/exampleDataPackage>.
+The above command, when executed in R, downloads and installs the `exampleDataPackage` from GitHub user `mvuorre`. You can view this example data package on GitHub: <https://github.com/mvuorre/exampleRPackage>.
 
 ## Documenting analysis as package vignette
 
@@ -291,7 +294,7 @@ The website is now available at `docs/index.html`. You can open it and view it l
 
 To make the website available to others, you can host it somewhere in the internet. The easiest option, again, is to host it on GitHub. 
 
-Assuming you have created the package in a local Git repository and have synced the repository to GitHub, this is easy. Push all the current changes to GitHub, and then go to the package's GitHub website, click "Settings", and scroll down to "GitHub Pages". There, click on the "Source" pull-down menu that currently says "None", and choose the "master branch /docs folder". Save the changes. After a little while, the page will be visible at https://username.github.io/packagename. For example, `exampleDataPackage`'s website is at <https://mvuorre.github.io/exampleDataPackage>.
+Assuming you have created the package in a local Git repository and have synced the repository to GitHub, this is easy. Push all the current changes to GitHub, and then go to the package's GitHub website, click "Settings", and scroll down to "GitHub Pages". There, click on the "Source" pull-down menu that currently says "None", and choose the "master branch /docs folder". Save the changes. After a little while, the page will be visible at https://username.github.io/packagename. For example, `exampleRPackage`'s website is at <https://mvuorre.github.io/exampleRPackage>.
 
 Thank you for reading.
 

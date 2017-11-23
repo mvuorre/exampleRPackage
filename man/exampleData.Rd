@@ -10,7 +10,7 @@
   \item{score}{The participant's score in hypothetical task Z.}
 }}
 \source{
-\url{https://www.github.com/mvuorre/exampleDataPackage}
+\url{https://www.github.com/mvuorre/exampleRPackage}
 }
 \usage{
 exampleData

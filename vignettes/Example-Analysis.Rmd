@@ -9,12 +9,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The data contained in the exampleDataPackage R package was analyzed exactly like detailed in this document.
+The data contained in the exampleRPackage R package was analyzed exactly like detailed in this document.
 
 First, because the data is contained in a package, we can easily call it from R
 
 ```{r}
-library(exampleDataPackage)
+library(exampleRPackage)
 head(exampleData)
 ```
 

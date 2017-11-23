@@ -1,4 +1,4 @@
-# This file simulates data for example use in exampleDataPackage.
+# This file simulates data for example use in exampleRPackage.
 # The simulated data is the "raw data" included in the package.
 # (Usually you would probably not have this file.)
 
