@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "README-"
 )
+library(exampleRPackage)
 ```
 
 # exampleRPackage
@@ -25,61 +26,35 @@ This is the Git(Hub) repository of an example R package. In our manuscript (not 
 
 [^1]: By "product", we mean any combination of text (manuscripts), code, data, stimuli, and other research materials.
 
-## How to download the raw data manually
-
-The "raw data" in this package is simulated for illustration purposes. 
-
-You will find all the raw data as .csv files in the [`data-raw/`](https://github.com/mvuorre/exampleRPackage/tree/master/data-raw) folder, from where they can be downloaded. That folder also contains full pre-processing instructions in the form of an R script.
-
-## How to obtain the data from within R
-
-One major benefit of wrapping the data into an R package is its easy availability from within R. No more wasted time looking around the computer's hard drive for the correct data files!
-
-Because the exampleRPackage is hosted on GitHub, you can easily download it from within R:
-
-```{r, eval = FALSE}
-# install.packages("devtools")  # Install this package if necessary
-devtools::install_github("mvuorre/exampleRPackage")
-```
-
-After the package finished installing (a few seconds), you can make the data in the package available in an R session:
-
-```{r}
-library(exampleRPackage)
-head(exampleData)
-```
-
-The rest of this README file describes briefly how to create R packages. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
+This README file describes how to create R packages with functions, data, and appropriate documentation. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
 
 ---
 
-# How to Create an R Data Package
+# How to Create an R Package
 
-The following is a short tutorial on how to create R data packages. The outline of the tutorial is as follows:
+The outline of the tutorial is as follows:
 
 1. [Create a new R package with R Studio](#create-a-new-r-package-with-r-studio)
     - With a few button clicks, this automatically sets up the underlying software infrastructure
 2. [Describe the package](#describe-the-package)
     - DESCRIPTION and README files
-3. [Add the data in appropriate locations](#add-data)
+3. [Add data to package](#add-data)
     - Raw data, preprocessing scripts, R data object
-4. [Document the data and package](#document-the-data-and-package)
-    - Ensure that users understand what the data and variables mean, and how to use it
+4. [Create and add functions](#create-functions)
+    - [todo]
+5. [Document the package](#document-the-package)
+    - Describe the package, its functions, and data, in a machine- and human-readable format
 
-After these simple steps, you will have a reproducible data package on your computer. It will be easy for you to use from within R (or otherwise), and because it is documented you will never forget what was done and how. 
+After these simple steps, you will have a functional R package on your computer. We will also go through advanced (optional) steps.
 
-We will also go through advanced (optional) steps.
-
-5. [Sharing the data package](#sharing-the-data-package)
+6. [Sharing the R package](#sharing-the-R-package)
     - Upload it to GitHub so it is easily available to anyone (R user or otherwise)
     - Mint a DOI for citeability and longevity (todo)
     - Connect to Open Science Framework (todo)
-6. [Document data analysis as package vignette](#documenting-analysis-as-package-vignette)
-    - Creates a readable .html file showing how the data is (or could be) analyzed
-7. [Create a website for the data package](#creating-a-website-for-the-data-package)
-    - Showcase your data and analysis online with a neat (and easy to create) website
-
-If you have not yet collected your data (*you need data for a data package*), it is a good idea to set up the package before any data is collected. Then, whenever new data arrives, you can place it in the correct folder and update the data package. Alternatively, if you already have data, you can create the data package and move all the data into the correct folder when required.
+7. [Document data analysis as package vignette](#documenting-analysis-as-package-vignette)
+    - Creates a readable file showing how to use the package. For example the vignette can describe how the data was (or could be) analyzed
+8. [Create a website for the package](#creating-a-website-for-the-data-package)
+    - Showcase your R package online with a website
 
 You will need one R package (R developer tools) to follow these instructions:
 
@@ -87,17 +62,17 @@ You will need one R package (R developer tools) to follow these instructions:
 install.packages("devtools")
 ```
 
-The **devtools** package [@wickham_devtools:_2017] contains helpful functions for creating the R data package.
+The **devtools** package [@wickham_devtools:_2017] contains helpful functions for creating R packages.
 
 ## Create a new R package with R Studio
 
 First, use R Studio to create a new R Project. While creating the project, make sure to create the project as an R Package:
 
-```{r, echo = F}
+```{r rstudio-create-pkg, echo = F}
 knitr::include_graphics("README-rstudio-create-project.png", dpi = 360)
 ```
 
-Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this (`exampleDataPackage` is the project's root folder):
+Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this (`exampleRPackage` is the project's root folder):
 
 ```bash
 exampleRPackage/
@@ -112,15 +87,15 @@ exampleRPackage/
 └── .Rbuildignore
 ```
 
-`man/` is the "manuals" folder which will have files documenting the package. `R/` is a folder for any R function files. `DESCRIPTION` is a file describing the package, and `NAMESPACE` its functions. `exampleRPackage.Rproj` identifies the folder as an R package. `.gitignore` and `.Rbuildignore` are hidden files, and specify which files should be ignored for Git operations, and R package building operations, respectively. The last three files can be safely ignored.
+`man/` is the "manuals" folder which will have files documenting the package. `R/` is a folder for R functions. `DESCRIPTION` is a file describing the package, and `NAMESPACE` its functions. `exampleRPackage.Rproj` identifies the folder as an R package project. `.gitignore` and `.Rbuildignore` are hidden files, and specify which files should be ignored by Git [@vuorre_curating_2017], and R package building operations, respectively. These last three files can be ignored for now.
 
 At this point, you can delete `man/hello.Rd` and `R/hello.R`. These two files are examples of R function files and R documentation files.
 
-This is already a fully functional R package (although it contains nothing so it's pretty useless.) We now need to make a few changes to turn it into an R data package. In short, we will create a minimal data package.
+This is already a fully functional R package (but it contains nothing so it's useless.) We now need to introduce content, and change some of the included files, to turn it into an R package. 
 
 ## Describe the package
 
-The `DESCRIPTION` file includes crucial information about the package in standard format. When you create an R package with R Studio, the process automatically creates this file with example content:
+The `DESCRIPTION` file includes necessary information about the package in standard format. When you create an R package with R Studio, the process automatically creates this file with example content:
 
 ```bash
 Package: exampleRPackage
@@ -136,7 +111,7 @@ Encoding: UTF-8
 LazyData: true
 ```
 
-Modify this file to something like the following (note you only need to change a few lines):
+Modify this file to reflect the details of your package, but make sure you don't change the formatting: This file is read by the R package creating process, and the file must therefore remain machine-readable. Here's an example:
 
 ```bash
 Package: exampleRPackage
@@ -153,16 +128,16 @@ Encoding: UTF-8
 LazyData: true
 ```
 
-The important changes to the above were the package's name, title, authors maintainer, description, and depends. Note the odd formatting for the `Authors@R` field; this ensures that the author's information is correctly recorded within the package. Then, you can go ahead and delete the `NAMESPACE` file. To add a license, it is easiest to use a helper function from the devtools package:
+The important changes to the above were the package's name, title, authors, maintainer, description, and depends. Note the odd formatting for the `Authors@R` field; this ensures that the author's information is correctly recorded within the package. Then, you can go ahead and delete the `NAMESPACE` file. To add a license, it is easiest to use a helper function from the devtools package:
 
 ```{r, eval = FALSE}
 library(devtools)
 use_mit_license()
 ```
 
-The above function will automatically add the necessary MIT license file and update the license field in the `DESCRIPTION` file. Alternatively, you can use the GPL3 license with `use_gpl3_license()`.
+The above function will automatically add the MIT license file and update the license field in the `DESCRIPTION` file. Alternatively, you can use the GPL3 license with `use_gpl3_license()`. The appropriate licensing of scientific data (and software) is an important topic but outside the scope of this tutorial [todo].
 
-Then, you'll want to add a `README` file which describes the package in some detail. We recommend writing the file in Markdown[^markdown] or R Markdown [@allaire_rmarkdown:_2016]. Here, we choose to create a `README.Rmd` R Markdown file, which, when knitted, produces a nice looking `README.md` Markdown file. Using devtools:
+Then, you should add a `README` file which describes the package in some detail. We recommend writing the file in Markdown[^markdown] or R Markdown [@allaire_rmarkdown:_2016]. Here, we choose to create a `README.Rmd` R Markdown file, which produces a nice looking `README.md` Markdown file. We use devtools to create a template README.rmd file, which we can then change to suit our needs:
 
 [^markdown]: <https://daringfireball.net/projects/markdown/>
 
@@ -172,6 +147,12 @@ use_readme_rmd()
 
 You can then write a description of the package (what is it, why does it exist, who created it, who to contact, etc.) Make changes to `README.Rmd` with R Studio's text editor. When you are done, click Knit in R Studio.
 
+```{r, echo = F}
+knitr::include_graphics("README-rstudio-knit.png", dpi = 360)
+```
+
+The package is now described, and includes a readme file that gives additional details about it to other potential users. The first content we add to this example R package is some (simulated) data.
+
 ## Add data
 
 First, we will add the raw data to its appropriate location (a `data-raw/` folder inside the project). You should use this helper function from devtools to create the folder, so that it is also appropriately handled when R builds the package:
@@ -180,21 +161,32 @@ First, we will add the raw data to its appropriate location (a `data-raw/` folde
 use_data_raw()
 ```
 
-You can then put all the raw data files to `data-raw/`. For this exampleRPackage, we simulated some simple example data, and therefore also put the R script that simulated the data and created the data files in the same folder.
+You can then put all the raw data files to `data-raw/`. For this example R package, we simulated some data, and therefore also put the R script that simulated the data and created the data files in the same folder.
 
-Then, move (or create) any pre-processing scripts or instructions to the same `data-raw/` folder. Doing so will allow for exact reproduction of the final data set. The pre-processing should output two files: One an easily downloadable .csv file, and also an R data object. To create the R data object, include the following at the end of your pre-processing script (or run in the console once you have completed pre-processing):
+Then, move (or create) any pre-processing scripts or instructions to the same `data-raw/` folder. Doing so will allow for exact reproduction of the final data set. The pre-processing should output two files: One an easily downloadable .csv file for non-R users, and an R data object for the R package. To create the R data object, include the following at the end of your pre-processing script (or run in the console once you have completed pre-processing):
 
 ```{r, eval = FALSE}
 use_data(exampleData)
 ```
 
-The above command assumes that your preprocessing results in an R data object called exampleData; you can change it to whatever you'd like. The `use_data()` function will save the R data object into `data/`. This means that your R package now includes a data set called `exampleData`.
+The above command assumes that your preprocessing script creates an R data object called exampleData; you can change it to whatever you'd like. The `use_data()` function will save the R data object into `data/`. This means that your R package now includes a data set called `exampleData`, which can be easily accessed within R:
 
-## Document the data and package
+```{r}
+library(exampleRPackage)  # Activate package in current R session
+head(exampleData)  # Display first 6 rows of example data
+```
 
-R users are familiar with reading function documentation by typing `?mean` in the R console. That reveals the documentation page for the `mean()` function. By adding a documentation file, your data object will also have a documentation page, which is easily accessible from within R.
+### How to download the raw data manually
 
-To document your data set, create a file called `data.R` in the `R` folder. Then, use the (roxygen2 [@wickham_roxygen2:_2017]) documentation syntax to write your data object's documentation in the `R/data.R` file. It will look something like the following for our `exampleData` object:
+Although it is not part of the formal R package, we stress that the raw data, and possible some form of pre-processed data, should be made available to others in a format that does not require R. We therefore recommend also including the data in some common format, such as comma separated values (`.csv`), in the `data-raw/` folder.
+
+For exampleRPackage, you will find all the raw data as .csv files in the [`data-raw/`](https://github.com/mvuorre/exampleRPackage/tree/master/data-raw) folder, from where they can be downloaded. That folder also contains full pre-processing instructions in the form of an R script.
+
+## Document the package
+
+R users are familiar with reading function documentation by typing `?mean` in the R console. That function reveals the documentation page for the `mean()` function. By adding a documentation file, your data object will also have a documentation page, which is easily accessible from within R.
+
+To document your data set, create a file called `data.R` in the `R` folder. Then, use R's (roxygen2 [@wickham_roxygen2:_2017]) documentation syntax to write your data object's documentation in the `R/data.R` file. It will look something like the following for our `exampleData` object:
 
 ```{r, eval = F}
 #' Scores of Group A and Group B.
@@ -207,19 +199,13 @@ To document your data set, create a file called `data.R` in the `R` folder. Then
 #'   \item{group}{Participant's group, A or B.}
 #'   \item{score}{Participant's score in hypothetical task Z.}
 #' }
-#' @source \url{https://www.github.com/mvuorre/exampleDataPackage}
+#' @source \url{https://www.github.com/mvuorre/exampleRPackage}
 "exampleData"
 ```
 
 The key features of this documentation file are (from top to bottom in the above code listing):
 
-Each line begins with a `#'`. The first line is a short description of the data. The `@description` field is a longer description of the data (with indentation if it spans multiple lines). The `@format` field describes the object's type (e.g. an R data.frame), its dimensions, and then describes all the variables (e.g. `group` and `score`). Importantly, the `@source` field includes the source of the data, which could be a citation to an academic article, for example. Finally, the last line should be the name of the data object in quotation marks. You can document multiple data files in the same `R/data.R` file; simply leave one blank line between them.
-
-It is important to document data well and precisely so there is never any ambiguity in the meaning of variables, where the data is from, etc. You should therefore spend some time writing this documentation file. Once the package has been built, this documentation can be viewed in R by calling (for this example data called `exampleData`) `?exampleData`:
-
-```{r, echo = F}
-knitr::include_graphics("README-exampleData-rdocumentation.png")
-```
+Each line begins with a `#'`. The first line is a short description of the data. The `@description` field is an optional longer description of the data (with indentation if it spans multiple lines). The `@format` field describes the object's type (e.g. an R data.frame), its dimensions, and then describes all the variables (e.g. `group` and `score`). The `@source` field includes the source of the data, which could be a citation to an academic article, for example. Finally, the last line should be the name of the data object in quotation marks. You can document multiple data files in the same `R/data.R` file; simply leave one blank line between them.
 
 Once you are done writing your description, you can use the `document()` helper function:
 
@@ -227,27 +213,31 @@ Once you are done writing your description, you can use the `document()` helper 
 document()
 ```
 
-This function, from the devtools package, will take what you have written and creates the necessary files in the `man/` folder.
+This function, from the devtools package, will take what you have written and creates machine-readable files in the `man/` folder.
 
-Then go to R Studio's **Build** tab, and click "Build & Reload". If everything went well, this should build the R package you have just created, and loads it into your current R workspace. You can then use your data simply by calling the name of the data object:
+Then go to R Studio's **Build** tab, and click "Build & Reload". If everything went well, this should build the R package you have just created, and loads it into your current R workspace. 
 
-```{r}
-head(exampleData)
+It is important to document data well and precisely so there is never any ambiguity in the meaning of variables, where the data is from, etc. You should therefore spend some time writing documentation files for data objects. Once the package has been built, this documentation (for `exampleData`) can be viewed in R by calling `?exampleData`:
+
+```{r, echo = F}
+knitr::include_graphics("README-exampleData-rdocumentation.png")
 ```
 
-Of course, if you just wanted to use your own data right now, there is little point in doing the extra work described here. However, the true benefits become apparent when you want to come back to the data in a few months time. It will be available to you with the above command, with full documentation. Furthermore, the data product is now easily shared with others, as described next.
+## Create functions
+
+[todo]
 
 # Advanced (optional) steps
 
-## Sharing the data package
+## Sharing the R package
 
-The easiest way to share the data product is to create the R package as a Git repository (see our tutorial on Git + GitHub: <https://github.com/mvuorre/reproguide-curate> [@vuorre_curating_2017]) and share it on GitHub. Once the R package's source code is pushed to GitHub, authorized users (by default, anyone) can browse it on GitHub and manually download any files they'd like (e.g. the raw data files.) Importantly, they can obtain the data very easily from within R by installing the R package you have just created:
+The easiest way to share the data product is to create the R package as a Git repository (see <https://github.com/mvuorre/reproguide-curate> and [@vuorre_curating_2017]) and share it on GitHub. We therefore recommend enabling Git (check the "Create a Git repository" button, Figure \@ref(fig:rstudio-create-pkg)) when creating the project. Once the R package's source code is pushed to GitHub, authorized users (by default, anyone) can browse it on GitHub and manually download any files they'd like (e.g. the raw data files.) Importantly, they can obtain the data with R by installing the R package you have just created:
 
 ```{r, eval = FALSE}
 devtools::install_github("mvuorre/exampleRPackage")
 ```
 
-The above command, when executed in R, downloads and installs the `exampleDataPackage` from GitHub user `mvuorre`. You can view this example data package on GitHub: <https://github.com/mvuorre/exampleRPackage>.
+The above command, when executed in R, downloads and installs the `exampleRPackage` from GitHub user `mvuorre`. You can view this example R package's source code on GitHub: <https://github.com/mvuorre/exampleRPackage>.
 
 ## Documenting analysis as package vignette
 
@@ -259,9 +249,11 @@ devtools::use_vignette("Example-Analysis")
 
 This creates a vignette template into the `vignettes/` folder. Write your analysis into the `.Rmd` file. See `vignettes/Example-Analysis.Rmd` for an example. Writing your analysis into a vignette ensures that users of the data also have access to the original analysis of the data. Furthermore, vignettes can be built into the package's website.
 
-## Creating a website for the data package
+## Creating a website for the R package
 
-You can even create a website for the data package. For this, you need the [pkgdown](https://hadley.github.io/pkgdown/) R package [@wickham_pkgdown:_2017]:
+[todo pkgdown is currently broken]
+
+You can even create a website for the R package. For this, you need the [pkgdown](https://hadley.github.io/pkgdown/) R package [@wickham_pkgdown:_2017]:
 
 ```{r, eval = FALSE}
 # install.packages("devtools")
@@ -282,9 +274,7 @@ to
 output: rmarkdown::github_document
 ```
 
-We expect that in future releases of devtools will eliminate the need for manually changing this. 
-
-After you've edited `README.Rmd`, Knit it once more. Then, to create the website, simply run:
+We expect that in future releases of devtools will eliminate the need for manually changing this.  To create the website, run:
 
 ```{r, eval = FALSE}
 pkgdown::build_site()
