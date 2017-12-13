@@ -1,20 +1,4 @@
 
--   [exampleRPackage](#examplerpackage)
--   [Motivation](#motivation)
--   [How to Create an R Package](#how-to-create-an-r-package)
-    -   [Create a new R package with R Studio](#create-a-new-r-package-with-r-studio)
-    -   [Describe the package](#describe-the-package)
-    -   [Add data](#add-data)
-    -   [Document the package](#document-the-package)
-    -   [Create functions](#create-functions)
--   [Advanced (optional) steps](#advanced-optional-steps)
-    -   [Sharing the R package](#sharing-the-r-package)
-    -   [Documenting analysis as package vignette](#documenting-analysis-as-package-vignette)
-    -   [Creating a website for the R package](#creating-a-website-for-the-r-package)
--   [Further Reading](#further-reading)
-    -   [Online Resources](#online-resources)
-    -   [References](#references)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 exampleRPackage
 ===============
@@ -35,6 +19,32 @@ The file you are reading now is the package's README, which describes how to cre
 Motivation
 ==========
 
+Lack of reproducibility has been identified as a key limiting factor to the reliability of scientific research, and researchers are now urged to focus on factors in their workflow that could improve the reproducibility of their results (Munaf‘o et al. 2017).
+
+> "A research project is computationally *reproducible* if a second investigator (including you in the future) can recreate the final reported results of the project, including key quantitative findings, tables, and figures, given only a set of files and written instructions." (Kitzes, Turek, and Deniz 2017)
+
+The role of standards and common practices has always been important in ensuring the continuity of one's work, especially in areas where results depend on computational work. For example, the BIDS (Brain Imaging Data Structure) has been introduced as a standardized organization for brain imaging to facilitate collaborative work on very large data sets and computationally demanding projects (Gorgolewski et al. 2016). However, similar standards have not been established for less computationally intense areas of behavioral science (although there have been some attempts, for example the Tier protocol\[^tier\]). \[^tier\]: <http://www.projecttier.org/tier-protocol/specifications/>
+
+Why adopt a common standard?
+----------------------------
+
+Quoting Gorgolewski et al. (2016):
+
+-   Minimized curation: Common standards make it possible for researchers who were not directly involved in data collection to understand and work with the data. This is particularly important to ensure that data remain accessible and usable by different researchers over time in the following instances:
+    -   within a laboratory over time
+    -   between labs facilitating collaboration and making combining data in multi-center studies easier and less ambiguous
+    -   between public databases (i.e., OpenfMRI) allowing for the quick ingestion of big data organized according to a common scheme.
+-   Error reduction: Errors attributed to the misunderstanding of the meaning of a given datum (e.g., when variable names are not explicitly stated in the data file and standardized across files).
+-   Optimized usage of data analysis software is made possible when the metadata necessary for analysis (i.e., details of the task or imaging protocol) are easily accessible in a standardized and machine- readable way. This enables the application of completely automated analysis workflows, which greatly enhances reproducibility and efficiency.
+-   Development of automated tools for verifying the consistency and completeness of datasets is realized. Such tools make it easier to spot missing metadata that limit how the data could be analyzed in the future.
+
+Which standard to adopt?
+------------------------
+
+Instead of suggesting yet another arbitrary standard, we propose that behavioral scientists could adopt a well-established standard from statistical software development for their project organizing principles. Specifically, in this tutorial we describe how to organize and share one's data sets, functions, and related materials including analyses, as packages for the R programming language (R Core Team 2017).
+
+Why R? R is an easily accessible programming language for statistical computing and graphics, and is rapidly increasing in popularity in the behavioral sciences. For example, the APS Observer recently ran a series of articles promoting R within the psychological science community (Yee and Debbie 2017). Importantly, users can create R packages with no or minimal coding, because many of the procedures have been implemented in the RStudio (RStudio Team 2016) graphical interface.
+
 How to Create an R Package
 ==========================
 
@@ -53,13 +63,13 @@ The outline of the tutorial is as follows:
 
 After these simple steps, you will have a functional R package on your computer. We will also go through advanced (optional) steps.
 
-1.  [Sharing the R package](#sharing-the-R-package)
+-   [Sharing the R package](#sharing-the-R-package)
     -   Upload it to GitHub so it is easily available to anyone (R user or otherwise)
     -   Mint a DOI for citeability and longevity (todo)
     -   Connect to Open Science Framework (todo)
-2.  [Document data analysis as package vignette](#documenting-analysis-as-package-vignette)
+-   [Document data analysis as package vignette](#documenting-analysis-as-package-vignette)
     -   Creates a readable file showing how to use the package. For example the vignette can describe how the data was (or could be) analyzed
-3.  [Create a website for the package](#creating-a-website-for-the-data-package)
+-   [Create a website for the package](#creating-a-website-for-the-data-package)
     -   Showcase your R package online with a website
 
 You will need one R package (R developer tools) to follow these instructions:
@@ -313,6 +323,16 @@ References
 
 Allaire, J. J., Joe Cheng, Yihui Xie, Jonathan McPherson, Winston Chang, Jeff Allen, Hadley Wickham, and Rob Hyndman. 2016. *Rmarkdown: Dynamic Documents for R* (version 1.3). <https://cran.r-project.org/web/packages/rmarkdown/index.html>.
 
+Gorgolewski, Krzysztof J., Tibor Auer, Vince D. Calhoun, R. Cameron Craddock, Samir Das, Eugene P. Duff, Guillaume Flandin, et al. 2016. “The Brain Imaging Data Structure, a Format for Organizing and Describing Outputs of Neuroimaging Experiments.” *Scientific Data* 3 (June): 160044. doi:[10.1038/sdata.2016.44](https://doi.org/10.1038/sdata.2016.44).
+
+Kitzes, Justin, Daniel Turek, and Fatma Deniz. 2017. *The Practice of Reproducible Research: Case Studies and Lessons from the Data-Intensive Sciences*. University of California Press. <https://www.practicereproducibleresearch.org/>.
+
+Munaf‘o, Marcus R., Brian A. Nosek, Dorothy V. M. Bishop, Katherine S. Button, Christopher D. Chambers, Nathalie Percie du Sert, Uri Simonsohn, Eric-Jan Wagenmakers, Jennifer J. Ware, and John P. A. Ioannidis. 2017. “A Manifesto for Reproducible Science.” *Nature Human Behaviour* 1 (January): 0021. doi:[10.1038/s41562-016-0021](https://doi.org/10.1038/s41562-016-0021).
+
+R Core Team. 2017. *R: A Language and Environment for Statistical Computing*. Vienna, Austria: R Foundation for Statistical Computing. <https://www.R-project.org/>.
+
+RStudio Team. 2016. *RStudio: Integrated Development Environment for R*. Boston, MA: RStudio, Inc. <http://www.rstudio.com/>.
+
 Vuorre, Matti, and James P. Curley. 2017. “Curating Research Assets in Behavioral Sciences: A Tutorial on the Git Version Control System.” *PsyArXiv Preprints*, June. doi:[10.17605/OSF.IO/TXGN8](https://doi.org/10.17605/OSF.IO/TXGN8).
 
 Wickham, Hadley. 2015. *R Packages: Organize, Test, Document, and Share Your Code*. “O’Reilly Media, Inc.” <http://r-pkgs.had.co.nz/>.
@@ -322,6 +342,8 @@ Wickham, Hadley. 2015. *R Packages: Organize, Test, Document, and Share Your Cod
 Wickham, Hadley, and Winston Chang. 2017. *Devtools: Tools to Make Developing R Packages Easier*. <https://CRAN.R-project.org/package=devtools>.
 
 Wickham, Hadley, Peter Danenberg, and Manuel Eugster. 2017. *Roxygen2: In-Line Documentation for R*. <https://CRAN.R-project.org/package=roxygen2>.
+
+Yee, Sara J. Weston, and Debbie. 2017. “Why You Should Become a UseR: A Brief Introduction to R.” *APS Observer* 30 (3). <https://www.psychologicalscience.org/observer/why-you-should-become-a-user-a-brief-introduction-to-r>.
 
 [1] By "product", we mean any combination of text (manuscripts), code, data, stimuli, and other research materials.
 

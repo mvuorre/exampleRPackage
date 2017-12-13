@@ -1,7 +1,7 @@
 ---
 output:
   github_document:
-    toc: true
+    toc: false
     toc_depth: 2
 bibliography: README-references.bib
 ---
@@ -36,7 +36,33 @@ The file you are reading now is the package's README, which describes how to cre
 
 # Motivation
 
+Lack of reproducibility has been identified as a key limiting factor to the reliability of scientific research, and researchers are now urged to focus on factors in their workflow that could improve the reproducibility of their results [@Munafomanifestoreproduciblescience2017]. 
 
+>"A research project is computationally *reproducible* if a second investigator (including you in the future) can recreate the final reported results of the project, including key quantitative findings, tables, and figures, given only a set of files and written instructions." [@KitzesPracticeReproducibleResearch2017]
+
+The role of standards and common practices has always been important in ensuring the continuity of one's work, especially in areas where results depend on computational work. For example, the BIDS (Brain Imaging Data Structure) has been introduced as a standardized organization for brain imaging to facilitate collaborative work on very large data sets and computationally demanding projects [@gorgolewski_brain_2016]. However, similar standards have not been established for less computationally intense areas of behavioral science (although there have been some attempts, for example the Tier protocol[^tier]).
+[^tier]: <http://www.projecttier.org/tier-protocol/specifications/>
+
+
+## Why adopt a common standard?
+
+Quoting @gorgolewski_brain_2016:
+
+* Minimized curation: Common standards make it possible for researchers who were not directly involved in data collection to understand and work with the data. This is particularly important to ensure that data remain accessible and usable by different researchers over time in the following instances:
+    * within a laboratory over time
+    * between labs facilitating collaboration and making combining data in multi-center studies easier
+and less ambiguous
+    * between public databases (i.e., OpenfMRI) allowing for the quick ingestion of big data organized
+according to a common scheme.
+* Error reduction: Errors attributed to the misunderstanding of the meaning of a given datum (e.g., when variable names are not explicitly stated in the data file and standardized across files).
+* Optimized usage of data analysis software is made possible when the metadata necessary for analysis (i.e., details of the task or imaging protocol) are easily accessible in a standardized and machine- readable way. This enables the application of completely automated analysis workflows, which greatly enhances reproducibility and efficiency.
+* Development of automated tools for verifying the consistency and completeness of datasets is realized. Such tools make it easier to spot missing metadata that limit how the data could be analyzed in the future.
+
+## Which standard to adopt?
+
+Instead of suggesting yet another arbitrary standard, we propose that behavioral scientists could adopt a well-established standard from statistical software development for their project organizing principles. Specifically, in this tutorial we describe how to organize and share one's data sets, functions, and related materials including analyses, as packages for the R programming language [@RCoreTeamLanguageEnvironmentStatistical2017].
+
+Why R? R is an easily accessible programming language for statistical computing and graphics, and is rapidly increasing in popularity in the behavioral sciences. For example, the APS Observer recently ran a series of articles promoting R within the psychological science community [@yee_why_2017]. Importantly, users can create R packages with no or minimal coding, because many of the procedures have been implemented in the RStudio [@RStudioTeamRStudioIntegratedDevelopment2016] graphical interface.
 
 # How to Create an R Package
 
@@ -55,13 +81,13 @@ The outline of the tutorial is as follows:
 
 After these simple steps, you will have a functional R package on your computer. We will also go through advanced (optional) steps.
 
-6. [Sharing the R package](#sharing-the-R-package)
+- [Sharing the R package](#sharing-the-R-package)
     - Upload it to GitHub so it is easily available to anyone (R user or otherwise)
     - Mint a DOI for citeability and longevity (todo)
     - Connect to Open Science Framework (todo)
-7. [Document data analysis as package vignette](#documenting-analysis-as-package-vignette)
+- [Document data analysis as package vignette](#documenting-analysis-as-package-vignette)
     - Creates a readable file showing how to use the package. For example the vignette can describe how the data was (or could be) analyzed
-8. [Create a website for the package](#creating-a-website-for-the-data-package)
+- [Create a website for the package](#creating-a-website-for-the-data-package)
     - Showcase your R package online with a website
 
 You will need one R package (R developer tools) to follow these instructions:
