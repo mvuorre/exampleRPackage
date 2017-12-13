@@ -1,5 +1,6 @@
 
 -   [exampleRPackage](#examplerpackage)
+-   [Motivation](#motivation)
 -   [How to Create an R Package](#how-to-create-an-r-package)
     -   [Create a new R package with R Studio](#create-a-new-r-package-with-r-studio)
     -   [Describe the package](#describe-the-package)
@@ -25,21 +26,14 @@ This is the Git(Hub) repository of an example R package. In our manuscript (not 
 ``` r
 # install.packages("devtools")
 devtools::install_github("mvuorre/exampleRPackage")
-#> Downloading GitHub repo mvuorre/exampleRPackage@master
-#> from URL https://api.github.com/repos/mvuorre/exampleRPackage/zipball/master
-#> Installing exampleRPackage
-#> '/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file  \
-#>   --no-environ --no-save --no-restore --quiet CMD INSTALL  \
-#>   '/private/var/folders/qd/306khmjn0sl9x00cgcblvmw80000gn/T/Rtmp9XX6oo/devtools6c21271df24/mvuorre-exampleRPackage-1f9313d'  \
-#>   --library='/Library/Frameworks/R.framework/Versions/3.4/Resources/library'  \
-#>   --install-tests
-#> 
-#> Reloading installed exampleRPackage
 ```
 
 The file you are reading now is the package's README, which describes how to create R packages with functions, data, and appropriate documentation. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages (Wickham 2015).
 
 ------------------------------------------------------------------------
+
+Motivation
+==========
 
 How to Create an R Package
 ==========================
