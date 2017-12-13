@@ -21,12 +21,16 @@ library(exampleRPackage)
 
 exampleRPackage is an example R package [available on GitHub](https://github.com/mvuorre/exampleRPackage).
 
+This is the Git(Hub) repository of an example R package. In our manuscript (not yet available), we describe why and how researchers might choose to share their research products[^1] as R packages. This repository is the example described in the manuscript, and can be viewed online for details of the implementation (that is, the R package's source code). The exampleRPackage can also be installed from github (although as an example package it does not contain anything useful):
 
-This is the Git(Hub) repository of an example R package. In our manuscript (not yet available), we describe why and how researchers might choose to share their research products[^1] as R packages. This repository is the example used in the manuscript, and can be viewed online (or installed / downloaded) for details of the implementation.
+```{r}
+# install.packages("devtools")
+devtools::install_github("mvuorre/exampleRPackage")
+```
 
 [^1]: By "product", we mean any combination of text (manuscripts), code, data, stimuli, and other research materials.
 
-This README file describes how to create R packages with functions, data, and appropriate documentation. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
+The file you are reading now is the package's README, which describes how to create R packages with functions, data, and appropriate documentation. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
 
 ---
 
