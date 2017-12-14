@@ -2,6 +2,7 @@ Package: exampleRPackage
 Type: Package
 Title: An example R package
 Version: 0.2.0
+Date: 2017-12-14
 Authors@R: person("Matti", "Vuorre", email = "mv2521@columbia.edu",
                   role = c("aut", "cre"))
 Description: This package is an example R package.
