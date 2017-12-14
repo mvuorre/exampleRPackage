@@ -1,8 +1,5 @@
 ---
-output:
-  github_document:
-    toc: false
-    toc_depth: 2
+output: github_document
 bibliography: README-references.bib
 ---
 
