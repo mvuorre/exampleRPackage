@@ -4,7 +4,6 @@ Title: An example R package
 Version: 0.2.0
 Authors@R: person("Matti", "Vuorre", email = "mv2521@columbia.edu",
                   role = c("aut", "cre"))
-Maintainer: Matti Vuorre <mv2521@columbia.edu>
 Description: This package is an example R package.
 URL: https://github.com/mvuorre/exampleRPackage/
 BugReports: http://github.com/mvuorre/exampleRPackage/issues/
