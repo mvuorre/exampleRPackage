@@ -1,6 +1,6 @@
 ---
 output: github_document
-bibliography: README-references.bib
+bibliography: "`r here::here('README-references.bib')`"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
