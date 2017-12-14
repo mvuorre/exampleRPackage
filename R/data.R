@@ -1,6 +1,6 @@
-#' Scores of Group A and Group B.
+#' @title Scores of Group A and Group B.
 #'
-#' A data set with the scores of two groups.
+#' @description A data set with the scores of two groups.
 #'
 #' @format A data frame with 60 rows and 2 variables:
 #' \describe{
