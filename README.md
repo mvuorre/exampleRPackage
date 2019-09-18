@@ -19,6 +19,14 @@ source code). The exampleRPackage can also be installed from github
 devtools::install_github("mvuorre/exampleRPackage")
 ```
 
+It is also permanently stored on OSF. To install from OSF:
+
+``` r
+temporary_file <- tempfile(fileext = ".tar.gz")
+download.file("https://osf.io/mqd6f/download", destfile = temporary_file)
+install.packages(temporary_file, repos = NULL)
+```
+
 The file you are reading now is the package’s README, which describes
 how to create R packages with functions, data, and appropriate
 documentation. In writing this online tutorial, we relied heavily on
@@ -356,7 +364,7 @@ Each line begins with a `#'`. The first line is a short description of
 the data. The `@description` field is an optional longer description of
 the data (with indentation if it spans multiple lines). The `@format`
 field describes the object’s type (e.g. an R data.frame), its
-dimensions, and then describes all the variables (e.g. `group` and
+dimensions, and then describes all the variables (e.g. `group` and
 `score`). The `@source` field includes the source of the data, which
 could be a citation to an academic article, for example. Finally, the
 last line should be the name of the data object in quotation marks. You
@@ -514,7 +522,7 @@ Gorgolewski, Krzysztof J., Tibor Auer, Vince D. Calhoun, R. Cameron
 Craddock, Samir Das, Eugene P. Duff, Guillaume Flandin, et al. 2016.
 “The Brain Imaging Data Structure, a Format for Organizing and
 Describing Outputs of Neuroimaging Experiments.” *Scientific Data* 3
-(June):160044. <https://doi.org/10.1038/sdata.2016.44>.
+(June): 160044. <https://doi.org/10.1038/sdata.2016.44>.
 
 </div>
 
@@ -533,7 +541,7 @@ Munaf‘o, Marcus R., Brian A. Nosek, Dorothy V. M. Bishop, Katherine S.
 Button, Christopher D. Chambers, Nathalie Percie du Sert, Uri Simonsohn,
 Eric-Jan Wagenmakers, Jennifer J. Ware, and John P. A. Ioannidis. 2017.
 “A Manifesto for Reproducible Science.” *Nature Human Behaviour* 1
-(January):0021. <https://doi.org/10.1038/s41562-016-0021>.
+(January): 0021. <https://doi.org/10.1038/s41562-016-0021>.
 
 </div>
 
