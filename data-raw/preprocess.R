@@ -4,10 +4,10 @@
 file_type <- ".csv"
 file_path <- list.files("data-raw/", full.names = T, pattern = file_type)
 read_many <- function(files) {
-    # Function to combine many files to one data object
-    flist <- lapply(files, read.csv)
-    data_obj <- do.call(rbind, flist)
-    return(data_obj)
+  # Function to combine many files to one data object
+  flist <- lapply(files, read.csv)
+  data_obj <- do.call(rbind, flist)
+  return(data_obj)
 }
 
 # Produce clean data by combining the two raw data files

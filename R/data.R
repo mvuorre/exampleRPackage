@@ -1,4 +1,4 @@
-#' @title Scores of Group A and Group B.
+#' @title Scores of Group A and Group B
 #'
 #' @description A data set with the scores of two groups.
 #'
@@ -7,5 +7,5 @@
 #'   \item{group}{Participant's group, A or B.}
 #'   \item{score}{The participant's score in hypothetical task.}
 #' }
-#' @source \url{https://www.github.com/mvuorre/exampleRPackage}
+#' @source <https://www.github.com/mvuorre/exampleRPackage>
 "exampleData"
