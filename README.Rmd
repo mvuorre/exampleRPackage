@@ -25,6 +25,14 @@ This is the Git(Hub) repository of an example R package. In our manuscript (not 
 devtools::install_github("mvuorre/exampleRPackage")
 ```
 
+It is also permanently stored on OSF. To install from OSF:
+
+```{r, eval = F}
+temporary_file <- tempfile(fileext = ".tar.gz")
+download.file("https://osf.io/mqd6f/download", destfile = temporary_file)
+install.packages(temporary_file, repos = NULL)
+```
+
 [^1]: By "product", we mean any combination of text (manuscripts), code, data, stimuli, and other research materials.
 
 The file you are reading now is the package's README, which describes how to create R packages with functions, data, and appropriate documentation. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
