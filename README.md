@@ -3,23 +3,17 @@
 
 # exampleRPackage
 
-exampleRPackage is an example R package [available on
-GitHub](https://github.com/mvuorre/exampleRPackage).
-
-This is the Git(Hub) repository of an example R package. In our
-manuscript (not yet available), we describe why and how researchers
-might choose to share their research products\[1\] as R packages. This
-repository is the example described in the manuscript, and can be viewed
-online for details of the implementation (that is, the R package’s
-source code). The exampleRPackage can also be installed from github
-(although as an example package it does not contain anything useful):
+exampleRPackage is an example R package that shows how R packages can be
+used to store and communicate scientific research outputs and metadata.
+exampleRPackage can be installed from github (although as an example
+package it does not contain anything useful):
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("mvuorre/exampleRPackage")
 ```
 
-It is also permanently stored on OSF. To install from OSF:
+It is also permanently stored on Open Science Framework:
 
 ``` r
 temporary_file <- tempfile(fileext = ".tar.gz")
@@ -27,19 +21,20 @@ download.file("https://osf.io/mqd6f/download", destfile = temporary_file)
 install.packages(temporary_file, repos = NULL)
 ```
 
-The file you are reading now is the package’s README, which describes
-how to create R packages with functions, data, and appropriate
-documentation. In writing this online tutorial, we relied heavily on
-Hadley Wickham’s “R Packages”, which is an excellent source of
-information on creating R packages (Wickham 2015).
+More importantly, you can browse the source code at
+<https://github.com/mvuorre/exampleRPackage/>.
 
------
+Here, we describe how to create R packages with functions, data, and
+appropriate documentation. In writing this online tutorial, we relied
+heavily on Hadley Wickham’s [“R Packages”](http://r-pkgs.had.co.nz/),
+which is an excellent source of information on creating R packages
+(Wickham 2015).
 
 # Motivation
 
 Lack of reproducibility has been identified as a key limiting factor to
 the reliability of scientific research, and researchers are now urged to
-focus on factors in their workflow that could improve the
+focus on factors in their workflows which could improve the
 reproducibility of their results (Munaf‘o et al. 2017).
 
 > “A research project is computationally *reproducible* if a second
@@ -56,8 +51,8 @@ imaging to facilitate collaborative work on very large data sets and
 computationally demanding projects (Gorgolewski et al. 2016). However,
 similar standards have not been established for less computationally
 intense areas of behavioral science (although there have been some
-attempts, for example the Tier protocol\[^tier\]). \[^tier\]:
-<http://www.projecttier.org/tier-protocol/specifications/>
+attempts, for example the Tier protocol
+<http://www.projecttier.org/tier-protocol/specifications/>).
 
 ## Why adopt a common standard?
 
@@ -104,7 +99,7 @@ and Debbie 2017). Importantly, users can create R packages with no or
 minimal coding, because many of the procedures have been implemented in
 the RStudio (RStudio Team 2016) graphical interface.
 
-# How to Create an R Package
+# How to Create R Packages
 
 The outline of the tutorial is as follows:
 
@@ -154,7 +149,7 @@ functions for creating R packages.
 First, use R Studio to create a new R Project. While creating the
 project, make sure to create the project as an R Package:
 
-![](README-rstudio-create-project.png)<!-- -->
+<img src="/Users/Matti/Documents/projects/exampleRPackage/rstudio-create-project.png" width="100%" />
 
 Creating an R (Package) Project with R Studio sets up the necessary
 infrastructure leaving little work for the user. After creating the
@@ -249,7 +244,7 @@ licensing of scientific data (and software) is an important topic but
 outside the scope of this tutorial \[todo\].
 
 Then, you should add a `README` file which describes the package in some
-detail. We recommend writing the file in Markdown\[2\] or R Markdown
+detail. We recommend writing the file in Markdown\[1\] or R Markdown
 (Allaire et al. 2016). Here, we choose to create a `README.Rmd` R
 Markdown file, which produces a nice looking `README.md` Markdown file.
 We use devtools to create a template README.rmd file, which we can then
@@ -264,7 +259,7 @@ exist, who created it, who to contact, etc.) Make changes to
 `README.Rmd` with R Studio’s text editor. When you are done, click Knit
 in R Studio.
 
-![](README-rstudio-knit.png)<!-- -->
+<img src="/Users/Matti/Documents/projects/exampleRPackage/rstudio-knit.png" width="100%" />
 
 The package is now described, and includes a readme file that gives
 additional details about it to other potential users. The first content
@@ -391,7 +386,7 @@ You should therefore spend some time writing documentation files for
 data objects. Once the package has been built, this documentation (for
 `exampleData`) can be viewed in R by calling `?exampleData`:
 
-![](README-exampleData-rdocumentation.png)<!-- -->
+<img src="/Users/Matti/Documents/projects/exampleRPackage/exampleData-rdocumentation.png" width="100%" />
 
 ## Create functions
 
@@ -505,7 +500,7 @@ Thank you for reading.
 
 ## References
 
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 
 <div id="ref-allaire_rmarkdown:_2016">
 
@@ -568,17 +563,17 @@ Behavioral Sciences: A Tutorial on the Git Version Control System.”
 
 </div>
 
-<div id="ref-wickham_r_2015">
+<div id="ref-wickham_pkgdown:_2017">
 
-Wickham, Hadley. 2015. *R Packages: Organize, Test, Document, and Share
-Your Code*. "O’Reilly Media, Inc.". <http://r-pkgs.had.co.nz/>.
+Wickham, Hadley. 2017. *Pkgdown: Make Static HTML Documentation for a
+Package*. <https://github.com/hadley/pkgdown>.
 
 </div>
 
-<div id="ref-wickham_pkgdown:_2017">
+<div id="ref-wickham_r_2015">
 
-———. 2017. *Pkgdown: Make Static HTML Documentation for a Package*.
-<https://github.com/hadley/pkgdown>.
+———. 2015. *R Packages: Organize, Test, Document, and Share Your Code*.
+"O’Reilly Media, Inc.". <http://r-pkgs.had.co.nz/>.
 
 </div>
 
@@ -608,7 +603,4 @@ Brief Introduction to R.” *APS Observer* 30 (3).
 
 </div>
 
-1.  By “product”, we mean any combination of text (manuscripts), code,
-    data, stimuli, and other research materials.
-
-2.  <https://daringfireball.net/projects/markdown/>
+1.  <https://daringfireball.net/projects/markdown/>

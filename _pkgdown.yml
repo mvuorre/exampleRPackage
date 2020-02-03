@@ -1,0 +1,8 @@
+url: http://mvuorre.github.io/exampleRPackage
+title: Example R Package
+destination: docs
+development:
+  mode: release
+template:
+  params:
+    bootswatch: cosmo

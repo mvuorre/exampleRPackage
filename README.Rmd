@@ -1,31 +1,32 @@
 ---
 output: github_document
-bibliography: "`r here::here('README-references.bib')`"
+bibliography: "`r here::here('references.bib')`"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "man/figures/README-",
+  out.width = "100%"
 )
 library(exampleRPackage)
+library(here)
+library(knitr)
 ```
 
 # exampleRPackage
 
-exampleRPackage is an example R package [available on GitHub](https://github.com/mvuorre/exampleRPackage).
-
-This is the Git(Hub) repository of an example R package. In our manuscript (not yet available), we describe why and how researchers might choose to share their research products[^1] as R packages. This repository is the example described in the manuscript, and can be viewed online for details of the implementation (that is, the R package's source code). The exampleRPackage can also be installed from github (although as an example package it does not contain anything useful):
+exampleRPackage is an example R package that shows how R packages can be used to store and communicate scientific research outputs and metadata. exampleRPackage can be installed from github (although as an example package it does not contain anything useful):
 
 ```{r, eval = F}
 # install.packages("devtools")
 devtools::install_github("mvuorre/exampleRPackage")
 ```
 
-It is also permanently stored on OSF. To install from OSF:
+It is also permanently stored on Open Science Framework:
 
 ```{r, eval = F}
 temporary_file <- tempfile(fileext = ".tar.gz")
@@ -33,21 +34,17 @@ download.file("https://osf.io/mqd6f/download", destfile = temporary_file)
 install.packages(temporary_file, repos = NULL)
 ```
 
-[^1]: By "product", we mean any combination of text (manuscripts), code, data, stimuli, and other research materials.
+More importantly, you can browse the source code at <https://github.com/mvuorre/exampleRPackage/>. 
 
-The file you are reading now is the package's README, which describes how to create R packages with functions, data, and appropriate documentation. In writing this online tutorial, we relied heavily on Hadley Wickham's "R Packages", which is an excellent source of information on creating R packages [@wickham_r_2015].
-
----
+Here, we describe how to create R packages with functions, data, and appropriate documentation. In writing this online tutorial, we relied heavily on Hadley Wickham's ["R Packages"](http://r-pkgs.had.co.nz/), which is an excellent source of information on creating R packages [@wickham_r_2015].
 
 # Motivation
 
-Lack of reproducibility has been identified as a key limiting factor to the reliability of scientific research, and researchers are now urged to focus on factors in their workflow that could improve the reproducibility of their results [@Munafomanifestoreproduciblescience2017]. 
+Lack of reproducibility has been identified as a key limiting factor to the reliability of scientific research, and researchers are now urged to focus on factors in their workflows which could improve the reproducibility of their results [@Munafomanifestoreproduciblescience2017]. 
 
 >"A research project is computationally *reproducible* if a second investigator (including you in the future) can recreate the final reported results of the project, including key quantitative findings, tables, and figures, given only a set of files and written instructions." [@KitzesPracticeReproducibleResearch2017]
 
-The role of standards and common practices has always been important in ensuring the continuity of one's work, especially in areas where results depend on computational work. For example, the BIDS (Brain Imaging Data Structure) has been introduced as a standardized organization for brain imaging to facilitate collaborative work on very large data sets and computationally demanding projects [@gorgolewski_brain_2016]. However, similar standards have not been established for less computationally intense areas of behavioral science (although there have been some attempts, for example the Tier protocol[^tier]).
-[^tier]: <http://www.projecttier.org/tier-protocol/specifications/>
-
+The role of standards and common practices has always been important in ensuring the continuity of one's work, especially in areas where results depend on computational work. For example, the BIDS (Brain Imaging Data Structure) has been introduced as a standardized organization for brain imaging to facilitate collaborative work on very large data sets and computationally demanding projects [@gorgolewski_brain_2016]. However, similar standards have not been established for less computationally intense areas of behavioral science (although there have been some attempts, for example the Tier protocol <http://www.projecttier.org/tier-protocol/specifications/>).
 
 ## Why adopt a common standard?
 
@@ -69,7 +66,7 @@ Instead of suggesting yet another arbitrary standard, we propose that behavioral
 
 Why R? R is an easily accessible programming language for statistical computing and graphics, and is rapidly increasing in popularity in the behavioral sciences. For example, the APS Observer recently ran a series of articles promoting R within the psychological science community [@yee_why_2017]. Importantly, users can create R packages with no or minimal coding, because many of the procedures have been implemented in the RStudio [@RStudioTeamRStudioIntegratedDevelopment2016] graphical interface.
 
-# How to Create an R Package
+# How to Create R Packages
 
 The outline of the tutorial is as follows:
 
@@ -107,8 +104,8 @@ The **devtools** package [@wickham_devtools:_2017] contains helpful functions fo
 
 First, use R Studio to create a new R Project. While creating the project, make sure to create the project as an R Package:
 
-```{r rstudio-create-pkg, echo = F}
-knitr::include_graphics("README-rstudio-create-project.png", dpi = 360)
+```{r, echo = F}
+include_graphics(here("rstudio-create-project.png"), dpi = 360)
 ```
 
 Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this (`exampleRPackage` is the project's root folder):
@@ -187,7 +184,7 @@ use_readme_rmd()
 You can then write a description of the package (what is it, why does it exist, who created it, who to contact, etc.) Make changes to `README.Rmd` with R Studio's text editor. When you are done, click Knit in R Studio.
 
 ```{r, echo = F}
-knitr::include_graphics("README-rstudio-knit.png", dpi = 360)
+include_graphics(here("rstudio-knit.png"), dpi = 360)
 ```
 
 The package is now described, and includes a readme file that gives additional details about it to other potential users. The first content we add to this example R package is some (simulated) data.
@@ -259,7 +256,7 @@ Then go to R Studio's **Build** tab, and click "Build & Reload". If everything w
 It is important to document data well and precisely so there is never any ambiguity in the meaning of variables, where the data is from, etc. You should therefore spend some time writing documentation files for data objects. Once the package has been built, this documentation (for `exampleData`) can be viewed in R by calling `?exampleData`:
 
 ```{r, echo = F}
-knitr::include_graphics("README-exampleData-rdocumentation.png")
+include_graphics(here("exampleData-rdocumentation.png"))
 ```
 
 ## Create functions
@@ -336,4 +333,5 @@ Thank you for reading.
 - [Writing R Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html): The official R documentation on writing R packages. This is the complete and definitive set of instructions on how to write R packages. It is almost unreadable in it's comprehensiveness, and unnecessary for small R packages such as the data package described here.
 
 ## References
+
 
