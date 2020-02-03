@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 library(exampleRPackage)
-library(here)
 library(knitr)
 ```
 
@@ -105,7 +104,7 @@ The **devtools** package [@wickham_devtools:_2017] contains helpful functions fo
 First, use R Studio to create a new R Project. While creating the project, make sure to create the project as an R Package:
 
 ```{r, echo = F}
-include_graphics(here("rstudio-create-project.png"), dpi = 360)
+include_graphics("rstudio-create-project.png", dpi = 360)
 ```
 
 Creating an R (Package) Project with R Studio sets up the necessary infrastructure leaving little work for the user. After creating the package, the project's files and folders look like this (`exampleRPackage` is the project's root folder):
@@ -184,7 +183,7 @@ use_readme_rmd()
 You can then write a description of the package (what is it, why does it exist, who created it, who to contact, etc.) Make changes to `README.Rmd` with R Studio's text editor. When you are done, click Knit in R Studio.
 
 ```{r, echo = F}
-include_graphics(here("rstudio-knit.png"), dpi = 360)
+include_graphics("rstudio-knit.png", dpi = 360)
 ```
 
 The package is now described, and includes a readme file that gives additional details about it to other potential users. The first content we add to this example R package is some (simulated) data.
@@ -256,7 +255,7 @@ Then go to R Studio's **Build** tab, and click "Build & Reload". If everything w
 It is important to document data well and precisely so there is never any ambiguity in the meaning of variables, where the data is from, etc. You should therefore spend some time writing documentation files for data objects. Once the package has been built, this documentation (for `exampleData`) can be viewed in R by calling `?exampleData`:
 
 ```{r, echo = F}
-include_graphics(here("exampleData-rdocumentation.png"))
+include_graphics("exampleData-rdocumentation.png")
 ```
 
 ## Create functions

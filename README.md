@@ -149,7 +149,7 @@ functions for creating R packages.
 First, use R Studio to create a new R Project. While creating the
 project, make sure to create the project as an R Package:
 
-<img src="/Users/Matti/Documents/projects/exampleRPackage/rstudio-create-project.png" width="100%" />
+<img src="rstudio-create-project.png" width="100%" />
 
 Creating an R (Package) Project with R Studio sets up the necessary
 infrastructure leaving little work for the user. After creating the
@@ -259,7 +259,7 @@ exist, who created it, who to contact, etc.) Make changes to
 `README.Rmd` with R Studio’s text editor. When you are done, click Knit
 in R Studio.
 
-<img src="/Users/Matti/Documents/projects/exampleRPackage/rstudio-knit.png" width="100%" />
+<img src="rstudio-knit.png" width="100%" />
 
 The package is now described, and includes a readme file that gives
 additional details about it to other potential users. The first content
@@ -386,7 +386,7 @@ You should therefore spend some time writing documentation files for
 data objects. Once the package has been built, this documentation (for
 `exampleData`) can be viewed in R by calling `?exampleData`:
 
-<img src="/Users/Matti/Documents/projects/exampleRPackage/exampleData-rdocumentation.png" width="100%" />
+<img src="exampleData-rdocumentation.png" width="100%" />
 
 ## Create functions
 
