@@ -1,5 +1,5 @@
 ---
-title: "Example Analysis of Example Data"
+title: "Example article"
 author: "Matti Vuorre"
 date: "`r Sys.Date()`"
 ---

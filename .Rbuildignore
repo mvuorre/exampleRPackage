@@ -7,4 +7,4 @@
 ^_pkgdown\.yml$
 ^pkgdown$
 ^references\.bib$
-^vignettes/Example-Analysis\.Rmd$
+^vignettes/Example-article\.Rmd$

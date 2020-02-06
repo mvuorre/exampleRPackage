@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Example Analysis of Example Data • Example R Package</title>
+<title>Example article • Example R Package</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Example Analysis of Example Data">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Example article">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -54,7 +54,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example-analysis.html">Example Analysis of Example Data</a>
+      <a href="../articles/Example-article.html">Example article</a>
     </li>
   </ul>
 </li>
@@ -79,16 +79,16 @@
 
       
 
-      </header><script src="example-analysis_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="Example-article_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Example Analysis of Example Data</h1>
+      <h1>Example article</h1>
                         <h4 class="author">Matti Vuorre</h4>
             
             <h4 class="date">2020-02-05</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mvuorre/exampleRPackage/blob/master/vignettes/example-analysis.Rmd"><code>vignettes/example-analysis.Rmd</code></a></small>
-      <div class="hidden name"><code>example-analysis.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/mvuorre/exampleRPackage/blob/master/vignettes/Example-article.Rmd"><code>vignettes/Example-article.Rmd</code></a></small>
+      <div class="hidden name"><code>Example-article.Rmd</code></div>
 
     </div>
 
@@ -107,7 +107,7 @@
 ## 6     a  94.33976</code></pre>
 <p>We drew a boxplot:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span>(score <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> exampleData)</span></code></pre></div>
-<p><img src="example-analysis_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="Example-article_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>And conducted a t-test:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span>(score <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> exampleData)</span></code></pre></div>
 <pre><code>## 
