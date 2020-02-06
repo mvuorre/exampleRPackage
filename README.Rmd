@@ -216,7 +216,7 @@ install.packages(temporary_file, repos = NULL)
 
 ## Creating a website for the R package
 
-Once the package's source code is hosted on GitHub, you can showcase its contents as a website. For example, you can view exampleRPackage's website at <https://mvuorre.github.io/exampleRPackage/>. To create websites from your packages, you need the [pkgdown](https://hadley.github.io/pkgdown/) R package [@wickham_pkgdown:_2017]. After installing that package, set up the required files for the website:
+Once the package's source code is hosted on GitHub, you can showcase its contents as a website. For example, you can view exampleRPackage's website at <https://mvuorre.github.io/exampleRPackage/>. To create websites from your packages, you need the [pkgdown](https://pkgdown.r-lib.org) R package [@wickham_pkgdown:_2017]. After installing that package, set up the required files for the website:
 
 ```{r}
 use_pkgdown()

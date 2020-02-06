@@ -426,9 +426,8 @@ Once the package’s source code is hosted on GitHub, you can showcase its
 contents as a website. For example, you can view exampleRPackage’s
 website at <https://mvuorre.github.io/exampleRPackage/>. To create
 websites from your packages, you need the
-[pkgdown](https://hadley.github.io/pkgdown/) R package (Wickham 2017).
-After installing that package, set up the required files for the
-website:
+[pkgdown](https://pkgdown.r-lib.org) R package (Wickham 2017). After
+installing that package, set up the required files for the website:
 
 ``` r
 use_pkgdown()
@@ -506,7 +505,7 @@ Markdown](https://rmarkdown.rstudio.com/) websites.
 
 ## References
 
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 
 <div id="ref-allaire_rmarkdown:_2016">
 
