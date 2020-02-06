@@ -6,7 +6,7 @@
 exampleRPackage shows how R packages can be used to store and
 communicate scientific research products and metadata. Browse its
 [source code](https://github.com/mvuorre/exampleRPackage), or read this
-document for a tutorial walk-through on creating R packages.
+document for a tutorial on creating R packages.
 
 # Introduction
 
@@ -50,18 +50,20 @@ manuscripts) beyond datasets in a reproducible collection of materials
 that is openly available on the internet for transparency and ease of
 access. We identified the R package standard with modern online-based
 workflows as a solution that doesn’t present overwhelming overhead for
-already busy researchers.
+already busy researchers. Here, we present a tutorial on creating R
+packages for sharing research products, such as data, functions, and
+analysis code embedded in narrative documents.
 
 # R Package tutorial
 
 The outline of this tutorial is as follows:
 
 1.  Create a new R package with R Studio
-      - Set up the fundamental package infrastructure with a few clicks
+      - Set up the fundamental package infrastructure
 2.  Describe the package
-      - Edit DESCRIPTION and README files
+      - Edit DESCRIPTION and readme files
 3.  Add data to package
-      - Raw data, preprocessing scripts, R data object
+      - Add raw data, preprocessing scripts, and an R data object
 4.  Create and add functions
       - Create and document functions
       - Dependencies
@@ -74,26 +76,24 @@ computer. Then, we will talk about sharing and showcasing your package
 online.
 
   - Sharing the package
-      - Upload to GitHub so the package and its source code are
+      - Upload to GitHub to make your package (and its source code)
         available
       - Connect to Open Science Framework
   - Create a website for the package
       - Showcase your R package online with a website
-  - Narrative documents
-      - Describe how your data and functions can be used
-        (e.g. manuscripts, supplementary analysis files)
+  - Add narrative documents
+      - Describe how to use your data and functions (e.g. manuscripts,
+        supplementary analysis files)
 
 ## Create a package with R Studio
 
 First, use R Studio to create a new R Project. Click “File” -\> “New
 Project…” -\> “New Directory” -\> “R Package”. This brings up a menu
-that allows you to give your package a name (no spaces or underscores
-allowed), and specify where to create it on your hard drive. To enable
-Git functionality (Vuorre and Curley 2018), make sure that the “Create a
-git repository” box is checked (this is required below, in the advanced
-topics section). In this tutorial, we create an R package called
-exampleRPackage; if you want to follow the tutorial exactly, choose that
-name for your package.
+where you give your package a name, and specify where to create it on
+your hard drive. To enable Git (Vuorre and Curley 2018), make sure that
+the “Create a git repository” box is checked (see below). In this
+tutorial, we create an R package called exampleRPackage; if you want to
+follow the tutorial exactly, choose that name for your package.
 
 After you click “Create project”, the project’s files and folders look
 like this:
@@ -120,11 +120,9 @@ functions. `R/` is the folder for scripts that contain R functions.
 `man/` is the “manuals” folder which will have files documenting the
 package’s functions.
 
-The package is already functional, but it contains nothing useful. At
-this point, delete the `man/hello.Rd` and NAMESPACE files. Those files
-relate to documenting functions, but we will use easier methods to do
-that (see below). Next, we introduce and edit the content to create a
-complete package that contains data and functions.
+The package is already functional, but it contains nothing useful: Next,
+we introduce and edit the content to create a complete package that
+contains data and functions.
 
 ## Describe the package
 
@@ -188,7 +186,9 @@ This function created the file, and also printed a message indicating
 that the file has been added to the “.Rbuildignore” file. Make changes
 to `README.Rmd` with R Studio’s text editor. When you are done, click
 Knit in R Studio, which produces a Markdown file that displays nicely
-when the package is hosted online (see below).
+when the package is hosted online (see below). (If your README.Rmd uses
+your package, you cannot Knit it before clicking “Install and Restart”
+in R Studio’s build tab.)
 
 Now that we have described the package, let’s add some data to it.
 
@@ -267,12 +267,8 @@ Finally, the last line should be the name of the data object in
 quotation marks. You can document multiple data files in the same
 `R/data.R` file; simply leave one blank line between them.
 
-To see what the data description looks like in R, type `?exampleData` in
-the R console. As a side note, you can use Markdown syntax in the
-documentation if you include a line with `Roxygen: list(markdown =
-TRUE)` in your package’s `DESCRIPTION`. For more details on creating,
-documenting, and including data sets in R packages, see
-<http://r-pkgs.had.co.nz/data.html>.
+For more details on creating, documenting, and including data sets in R
+packages, see <http://r-pkgs.had.co.nz/data.html>.
 
 ## Create functions
 
@@ -327,30 +323,14 @@ your package; that is, made available when you attach the package with
 executable examples of how to use your function. Below the function’s
 description is the actual code.
 
-To try this example function, run `hello("user name")` in R. To view the
-function’s documentation, run `?hello`. For more information on writing
-functions in R packages, see <http://r-pkgs.had.co.nz/r.html>.
+For more information on writing functions in R packages, see
+<http://r-pkgs.had.co.nz/r.html>.
 
 ## Finish documentation and build package
 
-The example package created as shown above now contains the following
-files and directories (most of which were automatically created):
-
-``` bash
-.
-├── .Rbuildignore
-├── .gitignore
-├── DESCRIPTION
-├── NAMESPACE
-├── R
-│   ├── data.R
-│   └── hello.R
-├── data
-│   └── exampleData.rda
-├── data-raw
-│   └── preprocess.R
-└── exampleRPackage.Rproj
-```
+We are almost ready with the minimal example package. The only remaining
+steps are to finish documenting the package, and then to build and
+install it on your computer.
 
 Your package is now documented in the DESCRIPTION file, and the
 functions and data are documented in their respective files in the R/
@@ -364,13 +344,17 @@ Studio generates documentation with roxygen. Go to Tools -\> Project
 Options… -\> Build Tools, and ensure that “Generate documentation with
 roxygen” is checked, and that “Automatically run roxygen when running
 install and restart” is checked in the subsequent “Configure” menu.
-Then, in R Studio’s “Build” tab, click “Install and Restart”.
+Then, delete the two files, man/hello.Rd and NAMESPACE, which R Studio
+created automatically when you started your package. Finally, in R
+Studio’s “Build” tab, click “Install and Restart”.
 
 Doing so automatically writes the documentation in man/, and the
 appropriate dependencies and your package’s exported functions into the
 NAMESPACE file, which you subsequently never need to (or should) edit
-manually. To read more about documenting your data and functions, please
-visit <http://r-pkgs.had.co.nz/man.html>.
+manually. After this, whenever you have edited your documentation,
+clicking “Install and Restart” will update the documentation files. To
+read more about documenting your data and functions, please visit
+<http://r-pkgs.had.co.nz/man.html>.
 
 Having clicked “Install and Restart” you have also, rather obviously,
 installed your package and restarted R. If, following this tutorial, you
@@ -389,6 +373,14 @@ head(exampleData)
 #> 4     a 102.70070
 #> 5     a  97.22694
 #> 6     a  94.33976
+```
+
+And you can view their help pages by prepending their names with a
+question mark:
+
+``` r
+?hello
+?exampleData
 ```
 
 # Advanced (optional) steps
@@ -445,7 +437,8 @@ use_pkgdown()
 Then, To create the website, run:
 
 ``` r
-pkgdown::build_site()
+library(pkgdown)
+build_site()
 ```
 
 The website is now available at `docs/index.html`. You can open it and
@@ -484,10 +477,14 @@ render as a subpage of the package’s website (see above).
 usethis::use_article("Example-Analysis")
 ```
 
-Then, after editing the contents of that file, re-run
-`pkgdown::build_site()`, and the document will be rendered as a webpage
-on the packages website (this example is located at
-<https://mvuorre.github.io/exampleRPackage/articles/Example-Analysis.html>).
+Then, after editing the contents of that file, re-run `build_site()`,
+and the document will be rendered as a webpage on the package’s website.
+
+The content we just added resulted in a website, but you could also
+include PDF manuscripts whose source code is R Markdown, or many other
+kinds of documents. For details, see the
+[pkgdown](https://hadley.github.io/pkgdown/) and [R
+Markdown](https://rmarkdown.rstudio.com/) websites.
 
 # Further Reading
 
@@ -504,6 +501,8 @@ on the packages website (this example is located at
     complete and definitive set of instructions on how to write R
     packages. It is almost unreadable in it’s comprehensiveness, and
     unnecessary for small R packages.
+  - <https://happygitwithr.com/>: A guide for using Git with R and R
+    Studio
 
 ## References
 

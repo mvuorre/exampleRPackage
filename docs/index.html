@@ -85,14 +85,14 @@
 <div id="examplerpackage" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#examplerpackage" class="anchor"></a>exampleRPackage</h1></div>
-<p>exampleRPackage shows how R packages can be used to store and communicate scientific research products and metadata. Browse its <a href="https://github.com/mvuorre/exampleRPackage">source code</a>, or read this document for a tutorial walk-through on creating R packages.</p>
+<p>exampleRPackage shows how R packages can be used to store and communicate scientific research products and metadata. Browse its <a href="https://github.com/mvuorre/exampleRPackage">source code</a>, or read this document for a tutorial on creating R packages.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>Research projects produce experiments, data, analyses, manuscripts, posters, slides, stimuli and materials, computational models, and more. However, the potential added value of these products is not fully realized due to limited sharing and curating practices. Although more transparent communication of these research products has recently been encouraged (Houtkoop et al. 2018; Lindsay 2017; Vanpaemel et al. 2015; Wicherts et al. 2006; Klein et al. 2018; Martone, Garcia-Castro, and VandenBos 2018; Rouder, Haaf, and Snyder 2019; Rouder 2016), these efforts often focus narrowly on sharing data (and sometimes analysis code). Further, the practical value of sharing is often limited by poor documentation, incompatible file formats, and lack of organization, resulting in low rates of reproducibility (Hardwicke et al. 2018). Standardization of protocols for sharing would be beneficial; but, such standards have not yet emerged. Instead of developing another standard, we suggest borrowing existing standards and practices from software engineering. Specifically, the R package standard, with additional R authoring tools, provides a robust framework for organizing and sharing reproducible research products.</p>
 <p>Some advances in data-sharing standards have emerged: In much of psychological science it is now customary to share data on Open Science Framework (OSF). However, those materials often contain idiosyncratic file organization and minimal or missing documentation for raw data. In specific areas, organization and documentation standards have emerged, (e.g., the BIDS framework in neuroscience, Gorgolewski et al. 2016), but they usually only consider data and code instead of the project as a whole. More comprehensive proposals are described in the Transparency and Openness Promotion (Nosek et al. 2015), and Peer Reviewers’ Openness initiative guidelines (Morey et al. 2016), but these fall short of describing detailed standards for organization and metadata.</p>
-<p>We sought for a standard for organizing and sharing that would adhere to the FAIR (Findable, Accessible, Interoperable, Reusable) guidelines to maximize the reuse potential of data and support “discovery through good data management” (Wilkinson et al. 2016). Additionally, we recognized the added value of including other research outputs (“products”; e.g., manuscripts) beyond datasets in a reproducible collection of materials that is openly available on the internet for transparency and ease of access. We identified the R package standard with modern online-based workflows as a solution that doesn’t present overwhelming overhead for already busy researchers.</p>
+<p>We sought for a standard for organizing and sharing that would adhere to the FAIR (Findable, Accessible, Interoperable, Reusable) guidelines to maximize the reuse potential of data and support “discovery through good data management” (Wilkinson et al. 2016). Additionally, we recognized the added value of including other research outputs (“products”; e.g., manuscripts) beyond datasets in a reproducible collection of materials that is openly available on the internet for transparency and ease of access. We identified the R package standard with modern online-based workflows as a solution that doesn’t present overwhelming overhead for already busy researchers. Here, we present a tutorial on creating R packages for sharing research products, such as data, functions, and analysis code embedded in narrative documents.</p>
 </div>
 <div id="r-package-tutorial" class="section level1">
 <h1 class="hasAnchor">
@@ -101,17 +101,17 @@
 <ol>
 <li>Create a new R package with R Studio
 <ul>
-<li>Set up the fundamental package infrastructure with a few clicks</li>
+<li>Set up the fundamental package infrastructure</li>
 </ul>
 </li>
 <li>Describe the package
 <ul>
-<li>Edit DESCRIPTION and README files</li>
+<li>Edit DESCRIPTION and readme files</li>
 </ul>
 </li>
 <li>Add data to package
 <ul>
-<li>Raw data, preprocessing scripts, R data object</li>
+<li>Add raw data, preprocessing scripts, and an R data object</li>
 </ul>
 </li>
 <li>Create and add functions
@@ -130,7 +130,7 @@
 <ul>
 <li>Sharing the package
 <ul>
-<li>Upload to GitHub so the package and its source code are available</li>
+<li>Upload to GitHub to make your package (and its source code) available</li>
 <li>Connect to Open Science Framework</li>
 </ul>
 </li>
@@ -139,16 +139,16 @@
 <li>Showcase your R package online with a website</li>
 </ul>
 </li>
-<li>Narrative documents
+<li>Add narrative documents
 <ul>
-<li>Describe how your data and functions can be used (e.g. manuscripts, supplementary analysis files)</li>
+<li>Describe how to use your data and functions (e.g. manuscripts, supplementary analysis files)</li>
 </ul>
 </li>
 </ul>
 <div id="create-a-package-with-r-studio" class="section level2">
 <h2 class="hasAnchor">
 <a href="#create-a-package-with-r-studio" class="anchor"></a>Create a package with R Studio</h2>
-<p>First, use R Studio to create a new R Project. Click “File” -&gt; “New Project…” -&gt; “New Directory” -&gt; “R Package”. This brings up a menu that allows you to give your package a name (no spaces or underscores allowed), and specify where to create it on your hard drive. To enable Git functionality (Vuorre and Curley 2018), make sure that the “Create a git repository” box is checked (this is required below, in the advanced topics section). In this tutorial, we create an R package called exampleRPackage; if you want to follow the tutorial exactly, choose that name for your package.</p>
+<p>First, use R Studio to create a new R Project. Click “File” -&gt; “New Project…” -&gt; “New Directory” -&gt; “R Package”. This brings up a menu where you give your package a name, and specify where to create it on your hard drive. To enable Git (Vuorre and Curley 2018), make sure that the “Create a git repository” box is checked (see below). In this tutorial, we create an R package called exampleRPackage; if you want to follow the tutorial exactly, choose that name for your package.</p>
 <p>After you click “Create project”, the project’s files and folders look like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">.</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>├── <span class="ex">.gitignore</span></span>
@@ -161,7 +161,7 @@
 <span id="cb1-9"><a href="#cb1-9"></a>└── <span class="fu">man</span></span>
 <span id="cb1-10"><a href="#cb1-10"></a>    └── <span class="ex">hello.Rd</span></span></code></pre></div>
 <p><code>.gitignore</code> and <code>.Rbuildignore</code> are hidden files, and specify which files should be ignored by Git (Vuorre and Curley 2018), and R package building operations, respectively. You can ignore them for now. <code>DESCRIPTION</code> is a file describing the package, and <code>NAMESPACE</code> its functions. <code>R/</code> is the folder for scripts that contain R functions. <code>exampleRPackage.Rproj</code> identifies the folder as an R package project. <code>man/</code> is the “manuals” folder which will have files documenting the package’s functions.</p>
-<p>The package is already functional, but it contains nothing useful. At this point, delete the <code>man/hello.Rd</code> and NAMESPACE files. Those files relate to documenting functions, but we will use easier methods to do that (see below). Next, we introduce and edit the content to create a complete package that contains data and functions.</p>
+<p>The package is already functional, but it contains nothing useful: Next, we introduce and edit the content to create a complete package that contains data and functions.</p>
 </div>
 <div id="describe-the-package" class="section level2">
 <h2 class="hasAnchor">
@@ -189,7 +189,7 @@
 <p>Although not part of the R package standard, we recommend creating a readme file that gives additional narrative description about your package. We recommend writing the file in Markdown or R Markdown (Allaire et al. 2016). To create the R Markdown file, use the following function from the usethis package:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(usethis)</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://usethis.r-lib.org/reference/use_readme_rmd.html">use_readme_rmd</a></span>()</span></code></pre></div>
-<p>This function created the file, and also printed a message indicating that the file has been added to the “.Rbuildignore” file. Make changes to <code>README.Rmd</code> with R Studio’s text editor. When you are done, click Knit in R Studio, which produces a Markdown file that displays nicely when the package is hosted online (see below).</p>
+<p>This function created the file, and also printed a message indicating that the file has been added to the “.Rbuildignore” file. Make changes to <code>README.Rmd</code> with R Studio’s text editor. When you are done, click Knit in R Studio, which produces a Markdown file that displays nicely when the package is hosted online (see below). (If your README.Rmd uses your package, you cannot Knit it before clicking “Install and Restart” in R Studio’s build tab.)</p>
 <p>Now that we have described the package, let’s add some data to it.</p>
 </div>
 </div>
@@ -217,7 +217,7 @@
 <span id="cb6-11"><a href="#cb6-11"></a><span class="st">"exampleData"</span></span></code></pre></div>
 <p>The key features of this documentation file are (from top to bottom in the above code listing):</p>
 <p>Each line begins with a <code>#'</code> to indicate roxygen2 syntax. First, your data set should have a title (<code>@title</code>). The <code>@description</code> field is an optional but highly recommended longer description of the data. For example, what were the collection procedures, who were the respondents, etc. The <code>@format</code> field describes the object (e.g. an R data.frame), its dimensions, and then describes all the variables (e.g. <code>group</code> and <code>score</code>). The <code>@source</code> field includes the source of the data, which could be a citation to an academic article, or a website, for example. Finally, the last line should be the name of the data object in quotation marks. You can document multiple data files in the same <code>R/data.R</code> file; simply leave one blank line between them.</p>
-<p>To see what the data description looks like in R, type <code><a href="reference/exampleData.html">?exampleData</a></code> in the R console. As a side note, you can use Markdown syntax in the documentation if you include a line with <code>Roxygen: list(markdown = TRUE)</code> in your package’s <code>DESCRIPTION</code>. For more details on creating, documenting, and including data sets in R packages, see <a href="http://r-pkgs.had.co.nz/data.html" class="uri">http://r-pkgs.had.co.nz/data.html</a>.</p>
+<p>For more details on creating, documenting, and including data sets in R packages, see <a href="http://r-pkgs.had.co.nz/data.html" class="uri">http://r-pkgs.had.co.nz/data.html</a>.</p>
 </div>
 <div id="create-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -241,40 +241,30 @@
 <span id="cb7-14"><a href="#cb7-14"></a>    <span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"Hello,"</span>, name))</span>
 <span id="cb7-15"><a href="#cb7-15"></a>}</span></code></pre></div>
 <p>This function, as was the data set above, is documented with <a href="https://roxygen2.r-lib.org/index.html">roxygen2</a> syntax. Many of the fields are similar from the above section on data documentation. Here, we also have <code>@param</code> fields, these describe what the function’s arguments are. The <code>@return</code> field describes what the function will return. <code>@export</code> indicates that the function should be exported from your package; that is, made available when you attach the package with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>. There is also an <code>@examples</code> field that can include executable examples of how to use your function. Below the function’s description is the actual code.</p>
-<p>To try this example function, run <code><a href="reference/hello.html">hello("user name")</a></code> in R. To view the function’s documentation, run <code><a href="reference/hello.html">?hello</a></code>. For more information on writing functions in R packages, see <a href="http://r-pkgs.had.co.nz/r.html" class="uri">http://r-pkgs.had.co.nz/r.html</a>.</p>
+<p>For more information on writing functions in R packages, see <a href="http://r-pkgs.had.co.nz/r.html" class="uri">http://r-pkgs.had.co.nz/r.html</a>.</p>
 </div>
 <div id="finish-documentation-and-build-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#finish-documentation-and-build-package" class="anchor"></a>Finish documentation and build package</h2>
-<p>The example package created as shown above now contains the following files and directories (most of which were automatically created):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">.</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>├── <span class="ex">.Rbuildignore</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>├── <span class="ex">.gitignore</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>├── <span class="ex">DESCRIPTION</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>├── <span class="ex">NAMESPACE</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>├── <span class="ex">R</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>│   ├── <span class="ex">data.R</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>│   └── <span class="ex">hello.R</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a>├── <span class="ex">data</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a>│   └── <span class="ex">exampleData.rda</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a>├── <span class="ex">data-raw</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>│   └── <span class="ex">preprocess.R</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a>└── <span class="ex">exampleRPackage.Rproj</span></span></code></pre></div>
+<p>We are almost ready with the minimal example package. The only remaining steps are to finish documenting the package, and then to build and install it on your computer.</p>
 <p>Your package is now documented in the DESCRIPTION file, and the functions and data are documented in their respective files in the R/ directory. The data and functions were documented with <a href="https://roxygen2.r-lib.org/">roxygen2</a> syntax, which must subsequently be translated into R’s documentation files in the man/ directory, and their dependencies must be listed in the NAMESPACE file.</p>
-<p>Fortunately, you don’t need to do that manually. First, ensure that R Studio generates documentation with roxygen. Go to Tools -&gt; Project Options… -&gt; Build Tools, and ensure that “Generate documentation with roxygen” is checked, and that “Automatically run roxygen when running install and restart” is checked in the subsequent “Configure” menu. Then, in R Studio’s “Build” tab, click “Install and Restart”.</p>
-<p>Doing so automatically writes the documentation in man/, and the appropriate dependencies and your package’s exported functions into the NAMESPACE file, which you subsequently never need to (or should) edit manually. To read more about documenting your data and functions, please visit <a href="http://r-pkgs.had.co.nz/man.html" class="uri">http://r-pkgs.had.co.nz/man.html</a>.</p>
+<p>Fortunately, you don’t need to do that manually. First, ensure that R Studio generates documentation with roxygen. Go to Tools -&gt; Project Options… -&gt; Build Tools, and ensure that “Generate documentation with roxygen” is checked, and that “Automatically run roxygen when running install and restart” is checked in the subsequent “Configure” menu. Then, delete the two files, man/hello.Rd and NAMESPACE, which R Studio created automatically when you started your package. Finally, in R Studio’s “Build” tab, click “Install and Restart”.</p>
+<p>Doing so automatically writes the documentation in man/, and the appropriate dependencies and your package’s exported functions into the NAMESPACE file, which you subsequently never need to (or should) edit manually. After this, whenever you have edited your documentation, clicking “Install and Restart” will update the documentation files. To read more about documenting your data and functions, please visit <a href="http://r-pkgs.had.co.nz/man.html" class="uri">http://r-pkgs.had.co.nz/man.html</a>.</p>
 <p>Having clicked “Install and Restart” you have also, rather obviously, installed your package and restarted R. If, following this tutorial, you created the <code><a href="reference/hello.html">hello()</a></code> function and <code>exampleData</code> data sets, they are now available to you when the package is attached:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(exampleRPackage)</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="kw"><a href="reference/hello.html">hello</a></span>(<span class="st">"my name"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt; [1] "Hello, My Name"</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(exampleData)</span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;   group     score</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; 1     a  97.18260</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; 2     a  86.87440</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; 3     a 107.95184</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; 4     a 102.70070</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; 5     a  97.22694</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; 6     a  94.33976</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(exampleRPackage)</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw"><a href="reference/hello.html">hello</a></span>(<span class="st">"my name"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; [1] "Hello, My Name"</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(exampleData)</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt;   group     score</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt; 1     a  97.18260</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; 2     a  86.87440</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; 3     a 107.95184</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; 4     a 102.70070</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; 5     a  97.22694</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; 6     a  94.33976</span></span></code></pre></div>
+<p>And you can view their help pages by prepending their names with a question mark:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>?hello</span>
+<span id="cb9-2"><a href="#cb9-2"></a>?exampleData</span></code></pre></div>
 </div>
 </div>
 <div id="advanced-optional-steps" class="section level1">
@@ -305,7 +295,8 @@
 <p>Once the package’s source code is hosted on GitHub, you can showcase its contents as a website. For example, you can view exampleRPackage’s website at <a href="https://mvuorre.github.io/exampleRPackage/" class="uri">https://mvuorre.github.io/exampleRPackage/</a>. To create websites from your packages, you need the <a href="https://hadley.github.io/pkgdown/">pkgdown</a> R package (Wickham 2017). After installing that package, set up the required files for the website:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://usethis.r-lib.org/reference/use_pkgdown.html">use_pkgdown</a></span>()</span></code></pre></div>
 <p>Then, To create the website, run:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>pkgdown<span class="op">::</span><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(pkgdown)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw"><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>()</span></code></pre></div>
 <p>The website is now available at <code>docs/index.html</code>. You can open it and view it locally. However, you will certainly want to upload the website somewhere so that others can access it as well. The easiest option is to host it on GitHub.</p>
 <p>Here, we assume that you have created the package in a local Git repository and have pushed the repository to GitHub. Push all the current changes to GitHub, and then go to the package’s GitHub website, click “Settings”, and scroll down to “GitHub Pages”. There, click on the “Source” pull-down menu that currently says “None”, and choose the “master branch /docs folder”. Save the changes. After a little while, the page will be visible at <a href="https://username.github.io/packagename" class="uri">https://username.github.io/packagename</a>. For example, <code>exampleRPackage</code>’s website is at <a href="https://mvuorre.github.io/exampleRPackage" class="uri">https://mvuorre.github.io/exampleRPackage</a>.</p>
 <p>There are many options for customizing the website; see <a href="https://pkgdown.r-lib.org" class="uri">https://pkgdown.r-lib.org</a>.</p>
@@ -316,7 +307,8 @@
 <p>Up to this point, our package has contained only code and data. However, typical research products make use of those to create narrative documents. R packages can contain vignettes, which show example uses of the package’s data and functions, and are distributed with the package. However, many more kinds of narrative documents can be shared along the R package’s source code, and included on the website, such as manuscript PDFs created with R Markdown.</p>
 <p>Here, we create an article that shows an example analysis of the dataset contained in our exampleRPackage. When completed, the document will render as a subpage of the package’s website (see above).</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>usethis<span class="op">::</span><span class="kw"><a href="https://usethis.r-lib.org/reference/use_vignette.html">use_article</a></span>(<span class="st">"Example-Analysis"</span>)</span></code></pre></div>
-<p>Then, after editing the contents of that file, re-run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html">pkgdown::build_site()</a></code>, and the document will be rendered as a webpage on the packages website (this example is located at <a href="https://mvuorre.github.io/exampleRPackage/articles/Example-Analysis.html" class="uri">https://mvuorre.github.io/exampleRPackage/articles/Example-Analysis.html</a>).</p>
+<p>Then, after editing the contents of that file, re-run <code><a href="https://pkgdown.r-lib.org/reference/build_site.html">build_site()</a></code>, and the document will be rendered as a webpage on the package’s website.</p>
+<p>The content we just added resulted in a website, but you could also include PDF manuscripts whose source code is R Markdown, or many other kinds of documents. For details, see the <a href="https://hadley.github.io/pkgdown/">pkgdown</a> and <a href="https://rmarkdown.rstudio.com/">R Markdown</a> websites.</p>
 </div>
 </div>
 <div id="further-reading" class="section level1">
@@ -332,6 +324,8 @@
 <a href="https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/">Writing an R package from scratch</a>: A short and good blog post on how to create minimal R packages</li>
 <li>
 <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html">Writing R Extensions</a>: The official R documentation on writing R packages. This is the complete and definitive set of instructions on how to write R packages. It is almost unreadable in it’s comprehensiveness, and unnecessary for small R packages.</li>
+<li>
+<a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a>: A guide for using Git with R and R Studio</li>
 </ul>
 </div>
 <div id="references" class="section level2">
