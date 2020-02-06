@@ -5,4 +5,15 @@ development:
   mode: release
 template:
   params:
-    bootswatch: cosmo
+    bootswatch: spacelab
+navbar:
+  structure:
+    left:  [home, articles, reference, news]
+    right: [github]
+components:
+  home: ~
+  articles:
+    text: Articles
+    menu:
+    - text: Example analysis
+      href: articles/Example-analysis.html
