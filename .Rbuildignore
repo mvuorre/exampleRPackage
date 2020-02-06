@@ -2,8 +2,9 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README-.*\.png$
-README-references.bib
 ^data-raw$
 ^docs$
 ^_pkgdown\.yml$
 ^pkgdown$
+^references\.bib$
+^vignettes/Example-Analysis\.Rmd$

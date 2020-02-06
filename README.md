@@ -3,212 +3,137 @@
 
 # exampleRPackage
 
-exampleRPackage is an example R package that shows how R packages can be
-used to store and communicate scientific research outputs and metadata.
-exampleRPackage can be installed from github (although as an example
-package it does not contain anything useful):
+exampleRPackage shows how R packages can be used to store and
+communicate scientific research products and metadata. Browse its
+[source code](https://github.com/mvuorre/exampleRPackage), or read this
+document for a tutorial walk-through on creating R packages.
 
-``` r
-# install.packages("devtools")
-devtools::install_github("mvuorre/exampleRPackage")
-```
+# Introduction
 
-It is also permanently stored on Open Science Framework:
+Research projects produce experiments, data, analyses, manuscripts,
+posters, slides, stimuli and materials, computational models, and more.
+However, the potential added value of these products is not fully
+realized due to limited sharing and curating practices. Although more
+transparent communication of these research products has recently been
+encouraged (Houtkoop et al. 2018; Lindsay 2017; Vanpaemel et al. 2015;
+Wicherts et al. 2006; Klein et al. 2018; Martone, Garcia-Castro, and
+VandenBos 2018; Rouder, Haaf, and Snyder 2019; Rouder 2016), these
+efforts often focus narrowly on sharing data (and sometimes analysis
+code). Further, the practical value of sharing is often limited by poor
+documentation, incompatible file formats, and lack of organization,
+resulting in low rates of reproducibility (Hardwicke et al. 2018).
+Standardization of protocols for sharing would be beneficial; but, such
+standards have not yet emerged. Instead of developing another standard,
+we suggest borrowing existing standards and practices from software
+engineering. Specifically, the R package standard, with additional R
+authoring tools, provides a robust framework for organizing and sharing
+reproducible research products.
 
-``` r
-temporary_file <- tempfile(fileext = ".tar.gz")
-download.file("https://osf.io/mqd6f/download", destfile = temporary_file)
-install.packages(temporary_file, repos = NULL)
-```
+Some advances in data-sharing standards have emerged: In much of
+psychological science it is now customary to share data on Open Science
+Framework (OSF). However, those materials often contain idiosyncratic
+file organization and minimal or missing documentation for raw data. In
+specific areas, organization and documentation standards have emerged,
+(e.g., the BIDS framework in neuroscience, Gorgolewski et al. 2016), but
+they usually only consider data and code instead of the project as a
+whole. More comprehensive proposals are described in the Transparency
+and Openness Promotion (Nosek et al. 2015), and Peer Reviewers’ Openness
+initiative guidelines (Morey et al. 2016), but these fall short of
+describing detailed standards for organization and metadata.
 
-More importantly, you can browse the source code at
-<https://github.com/mvuorre/exampleRPackage/>.
+We sought for a standard for organizing and sharing that would adhere to
+the FAIR (Findable, Accessible, Interoperable, Reusable) guidelines to
+maximize the reuse potential of data and support “discovery through good
+data management” (Wilkinson et al. 2016). Additionally, we recognized
+the added value of including other research outputs (“products”; e.g.,
+manuscripts) beyond datasets in a reproducible collection of materials
+that is openly available on the internet for transparency and ease of
+access. We identified the R package standard with modern online-based
+workflows as a solution that doesn’t present overwhelming overhead for
+already busy researchers.
 
-Here, we describe how to create R packages with functions, data, and
-appropriate documentation. In writing this online tutorial, we relied
-heavily on Hadley Wickham’s [“R Packages”](http://r-pkgs.had.co.nz/),
-which is an excellent source of information on creating R packages
-(Wickham 2015).
+# R Package tutorial
 
-# Motivation
+The outline of this tutorial is as follows:
 
-Lack of reproducibility has been identified as a key limiting factor to
-the reliability of scientific research, and researchers are now urged to
-focus on factors in their workflows which could improve the
-reproducibility of their results (Munaf‘o et al. 2017).
-
-> “A research project is computationally *reproducible* if a second
-> investigator (including you in the future) can recreate the final
-> reported results of the project, including key quantitative findings,
-> tables, and figures, given only a set of files and written
-> instructions.” (Kitzes, Turek, and Deniz 2017)
-
-The role of standards and common practices has always been important in
-ensuring the continuity of one’s work, especially in areas where results
-depend on computational work. For example, the BIDS (Brain Imaging Data
-Structure) has been introduced as a standardized organization for brain
-imaging to facilitate collaborative work on very large data sets and
-computationally demanding projects (Gorgolewski et al. 2016). However,
-similar standards have not been established for less computationally
-intense areas of behavioral science (although there have been some
-attempts, for example the Tier protocol
-<http://www.projecttier.org/tier-protocol/specifications/>).
-
-## Why adopt a common standard?
-
-Quoting Gorgolewski et al. (2016):
-
-  - Minimized curation: Common standards make it possible for
-    researchers who were not directly involved in data collection to
-    understand and work with the data. This is particularly important to
-    ensure that data remain accessible and usable by different
-    researchers over time in the following instances:
-      - within a laboratory over time
-      - between labs facilitating collaboration and making combining
-        data in multi-center studies easier and less ambiguous
-      - between public databases (i.e., OpenfMRI) allowing for the quick
-        ingestion of big data organized according to a common scheme.
-  - Error reduction: Errors attributed to the misunderstanding of the
-    meaning of a given datum (e.g., when variable names are not
-    explicitly stated in the data file and standardized across files).
-  - Optimized usage of data analysis software is made possible when the
-    metadata necessary for analysis (i.e., details of the task or
-    imaging protocol) are easily accessible in a standardized and
-    machine- readable way. This enables the application of completely
-    automated analysis workflows, which greatly enhances reproducibility
-    and efficiency.
-  - Development of automated tools for verifying the consistency and
-    completeness of datasets is realized. Such tools make it easier to
-    spot missing metadata that limit how the data could be analyzed in
-    the future.
-
-## Which standard to adopt?
-
-Instead of suggesting yet another arbitrary standard, we propose that
-behavioral scientists could adopt a well-established standard from
-statistical software development for their project organizing
-principles. Specifically, in this tutorial we describe how to organize
-and share one’s data sets, functions, and related materials including
-analyses, as packages for the R programming language (R Core Team 2017).
-
-Why R? R is an easily accessible programming language for statistical
-computing and graphics, and is rapidly increasing in popularity in the
-behavioral sciences. For example, the APS Observer recently ran a series
-of articles promoting R within the psychological science community (Yee
-and Debbie 2017). Importantly, users can create R packages with no or
-minimal coding, because many of the procedures have been implemented in
-the RStudio (RStudio Team 2016) graphical interface.
-
-# How to Create R Packages
-
-The outline of the tutorial is as follows:
-
-1.  [Create a new R package with R
-    Studio](#create-a-new-r-package-with-r-studio)
-      - With a few button clicks, this automatically sets up the
-        underlying software infrastructure
-2.  [Describe the package](#describe-the-package)
-      - DESCRIPTION and README files
-3.  [Add data to package](#add-data)
+1.  Create a new R package with R Studio
+      - Set up the fundamental package infrastructure with a few clicks
+2.  Describe the package
+      - Edit DESCRIPTION and README files
+3.  Add data to package
       - Raw data, preprocessing scripts, R data object
-4.  [Create and add functions](#create-functions)
-      - \[todo\]
-5.  [Document the package](#document-the-package)
+4.  Create and add functions
+      - Create and document functions
+      - Dependencies
+5.  Document the package
       - Describe the package, its functions, and data, in a machine- and
         human-readable format
 
-After these simple steps, you will have a functional R package on your
-computer. We will also go through advanced (optional) steps.
+After these steps, you will have a functional R package on your
+computer. Then, we will talk about sharing and showcasing your package
+online.
 
-  - [Sharing the R package](#sharing-the-R-package)
-      - Upload it to GitHub so it is easily available to anyone (R user
-        or otherwise)
-      - Mint a DOI for citeability and longevity (todo)
-      - Connect to Open Science Framework (todo)
-  - [Document data analysis as package
-    vignette](#documenting-analysis-as-package-vignette)
-      - Creates a readable file showing how to use the package. For
-        example the vignette can describe how the data was (or could be)
-        analyzed
-  - [Create a website for the
-    package](#creating-a-website-for-the-data-package)
+  - Sharing the package
+      - Upload to GitHub so the package and its source code are
+        available
+      - Connect to Open Science Framework
+  - Create a website for the package
       - Showcase your R package online with a website
+  - Narrative documents
+      - Describe how your data and functions can be used
+        (e.g. manuscripts, supplementary analysis files)
 
-You will need one R package (R developer tools) to follow these
-instructions:
+## Create a package with R Studio
 
-``` r
-install.packages("devtools")
-```
+First, use R Studio to create a new R Project. Click “File” -\> “New
+Project…” -\> “New Directory” -\> “R Package”. This brings up a menu
+that allows you to give your package a name (no spaces or underscores
+allowed), and specify where to create it on your hard drive. To enable
+Git functionality (Vuorre and Curley 2018), make sure that the “Create a
+git repository” box is checked (this is required below, in the advanced
+topics section). In this tutorial, we create an R package called
+exampleRPackage; if you want to follow the tutorial exactly, choose that
+name for your package.
 
-The **devtools** package (Wickham and Chang 2017) contains helpful
-functions for creating R packages.
-
-## Create a new R package with R Studio
-
-First, use R Studio to create a new R Project. While creating the
-project, make sure to create the project as an R Package:
-
-<img src="rstudio-create-project.png" width="100%" />
-
-Creating an R (Package) Project with R Studio sets up the necessary
-infrastructure leaving little work for the user. After creating the
-package, the project’s files and folders look like this
-(`exampleRPackage` is the project’s root folder):
+After you click “Create project”, the project’s files and folders look
+like this:
 
 ``` bash
-exampleRPackage/
-├── man/
-|   └── hello.Rd
-├── R/
-|   └── hello.R
+.
+├── .gitignore
+├── .Rbuildignore
 ├── DESCRIPTION
 ├── NAMESPACE
+├── R
+│   └── hello.R
 ├── exampleRPackage.Rproj
-├── .gitignore
-└── .Rbuildignore
+└── man
+    └── hello.Rd
 ```
 
-`man/` is the “manuals” folder which will have files documenting the
-package. `R/` is a folder for R functions. `DESCRIPTION` is a file
-describing the package, and `NAMESPACE` its functions.
-`exampleRPackage.Rproj` identifies the folder as an R package project.
 `.gitignore` and `.Rbuildignore` are hidden files, and specify which
-files should be ignored by Git (Vuorre and Curley 2017), and R package
-building operations, respectively. These last three files can be ignored
-for now.
+files should be ignored by Git (Vuorre and Curley 2018), and R package
+building operations, respectively. You can ignore them for now.
+`DESCRIPTION` is a file describing the package, and `NAMESPACE` its
+functions. `R/` is the folder for scripts that contain R functions.
+`exampleRPackage.Rproj` identifies the folder as an R package project.
+`man/` is the “manuals” folder which will have files documenting the
+package’s functions.
 
-At this point, you can delete `man/hello.Rd` and `R/hello.R`. These two
-files are examples of R function files and R documentation files.
-
-This is already a fully functional R package (but it contains nothing so
-it’s useless.) We now need to introduce content, and change some of the
-included files, to turn it into an R package.
+The package is already functional, but it contains nothing useful. At
+this point, delete the `man/hello.Rd` and NAMESPACE files. Those files
+relate to documenting functions, but we will use easier methods to do
+that (see below). Next, we introduce and edit the content to create a
+complete package that contains data and functions.
 
 ## Describe the package
 
-The `DESCRIPTION` file includes necessary information about the package
-in standard format. When you create an R package with R Studio, the
-process automatically creates this file with example content:
-
-``` bash
-Package: exampleRPackage
-Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
-Encoding: UTF-8
-LazyData: true
-```
-
-Modify this file to reflect the details of your package, but make sure
-you don’t change the formatting: This file is read by the R package
-creating process, and the file must therefore remain machine-readable.
-Here’s an example:
+The `DESCRIPTION` file describes the package in a standard,
+machine-readable format. This file is automatically created with example
+content by R Studio. However, you need to edit the file to reflect the
+details of your package, making sure you don’t change the formatting:
+This file is read by the R package creating process, and the file must
+therefore remain machine-readable. Here’s an example:
 
 ``` bash
 Package: exampleRPackage
@@ -217,90 +142,246 @@ Title: An example R package
 Version: 0.1.0
 Authors@R: person("Matti", "Vuorre", email = "mv2521@columbia.edu",
                   role = c("aut", "cre"))
-Maintainer: Matti Vuorre <mv2521@columbia.edu>
 Description: This package is an example R package.
-License: What license is it under?
-Depends: R (>= 3.1.0)
 Encoding: UTF-8
 LazyData: true
+Depends: 
+    R (>= 3.1)
+Imports:
+    stringr
 ```
 
-The important changes to the above were the package’s name, title,
-authors, maintainer, description, and depends. Note the odd formatting
-for the `Authors@R` field; this ensures that the author’s information is
-correctly recorded within the package. Then, you can go ahead and delete
-the `NAMESPACE` file. To add a license, it is easiest to use a helper
-function from the devtools package:
+This file serves two important purposes. First, it describes your
+package (`Title`, `Version` number, `Authors`, and `Description`). The
+`Authors@R` field contains person information in R syntax (see
+`?person`), and can include multiple persons by wrapping them in `c()`.
+(`Encoding` and `Lazydata` field can be ignored, for our purposes.)
+Second, it specifies your package’s dependencies (`Depends`, `Imports`,
+and `Suggests` \[the latter is not included in this example\]).
+
+There are important differences between the three fields for specifying
+your package’s dependencies. First, you should rarely, if ever, use
+`Depends`, except for specifying a version of R that your package
+requires. `Imports` is the most common field for listing the R packages
+that your package requires: Packages listed in `Imports` are installed
+when your package is installed. When you write functions (see below) in
+your package, you can use the other package’s functions with the `::`
+operator (e.g. `stringr::to_title_case()`).
+
+For more information about DESCRIPTION, and describing your package, see
+<http://r-pkgs.had.co.nz/description.html>.
+
+### Readme
+
+Although not part of the R package standard, we recommend creating a
+readme file that gives additional narrative description about your
+package. We recommend writing the file in Markdown or R Markdown
+(Allaire et al. 2016). To create the R Markdown file, use the following
+function from the usethis package:
 
 ``` r
-library(devtools)
-use_mit_license()
-```
-
-The above function will automatically add the MIT license file and
-update the license field in the `DESCRIPTION` file. Alternatively, you
-can use the GPL3 license with `use_gpl3_license()`. The appropriate
-licensing of scientific data (and software) is an important topic but
-outside the scope of this tutorial \[todo\].
-
-Then, you should add a `README` file which describes the package in some
-detail. We recommend writing the file in Markdown\[1\] or R Markdown
-(Allaire et al. 2016). Here, we choose to create a `README.Rmd` R
-Markdown file, which produces a nice looking `README.md` Markdown file.
-We use devtools to create a template README.rmd file, which we can then
-change to suit our needs:
-
-``` r
+library(usethis)
 use_readme_rmd()
 ```
 
-You can then write a description of the package (what is it, why does it
-exist, who created it, who to contact, etc.) Make changes to
-`README.Rmd` with R Studio’s text editor. When you are done, click Knit
-in R Studio.
+This function created the file, and also printed a message indicating
+that the file has been added to the “.Rbuildignore” file. Make changes
+to `README.Rmd` with R Studio’s text editor. When you are done, click
+Knit in R Studio, which produces a Markdown file that displays nicely
+when the package is hosted online (see below).
 
-<img src="rstudio-knit.png" width="100%" />
-
-The package is now described, and includes a readme file that gives
-additional details about it to other potential users. The first content
-we add to this example R package is some (simulated) data.
+Now that we have described the package, let’s add some data to it.
 
 ## Add data
 
-First, we will add the raw data to its appropriate location (a
-`data-raw/` folder inside the project). You should use this helper
-function from devtools to create the folder, so that it is also
-appropriately handled when R builds the package:
+The purposes of saving data in an R package are that the resulting data
+will be easily available, and described and organized in a standard,
+machine-readable format. Further, if your package’s source code is under
+version control (Vuorre and Curley 2018), the data will be versioned as
+well.
+
+Broadly, there are 3 steps to including data in an R package: 1. Placing
+raw data in the “data-raw” directory, 2. creating an R script that
+processes the raw data and creates an R data object into the “data”
+directory, and 3. documenting the final data object.
+
+First, we will add the raw data to a `data-raw/` directory. We use a
+convenience function from the usethis package to create that folder,
+which will also add the folder into the `.Rbuildignore` file, ensuring
+that the R package build process will ignore it.
 
 ``` r
 use_data_raw()
 ```
 
-You can then put all the raw data files to `data-raw/`. For this example
-R package, we simulated some data, and therefore also put the R script
-that simulated the data and created the data files in the same folder.
-
-Then, move (or create) any pre-processing scripts or instructions to the
-same `data-raw/` folder. Doing so will allow for exact reproduction of
-the final data set. The pre-processing should output two files: One an
-easily downloadable .csv file for non-R users, and an R data object for
-the R package. To create the R data object, include the following at the
-end of your pre-processing script (or run in the console once you have
-completed pre-processing):
+Then, I moved an example data file (a small simulated dataset) to the
+“data-raw” directory, and created a
+[“preprocess.R”](https://github.com/mvuorre/exampleRPackage/blob/master/data-raw/preprocess.R)
+file in the same directory. Usually, that file would contain the code
+for pre-processing the data, but for this example that is not needed.
+That example preprocessing file simply reads in the data file, and runs
+the following command:
 
 ``` r
 use_data(exampleData)
 ```
 
-The above command assumes that your preprocessing script creates an R
-data object called exampleData; you can change it to whatever you’d
-like. The `use_data()` function will save the R data object into
-`data/`. This means that your R package now includes a data set called
-`exampleData`, which can be easily accessed within R:
+The above command takes the `exampleData` object from the R environment
+(created in the
+[script](https://github.com/mvuorre/exampleRPackage/blob/master/data-raw/preprocess.R))
+and saves the R data object into `data/`. As a result, your R package
+now includes a data set called `exampleData`.
+
+Finally, the resulting R data object should be documented in a standard
+format by placing a `data.R` file in the “R” directory. To document your
+data set, create a file called `data.R` in the `R` directory. Then, use
+[roxygen2](https://roxygen2.r-lib.org/) (Wickham, Danenberg, and Eugster
+2017) documentation syntax to write your data object’s documentation in
+the `R/data.R` file. It should look similar to the following for our
+`exampleData` object:
+
+    #' @title Scores of Group A and Group B
+    #'
+    #' @description A data set with the scores of two groups.
+    #'
+    #' @format A data frame with 60 rows and 2 variables:
+    #' \describe{
+    #'   \item{group}{Participant's group, A or B.}
+    #'   \item{score}{The participant's score in hypothetical task.}
+    #' }
+    #' @source <https://www.github.com/mvuorre/exampleRPackage>
+    "exampleData"
+
+The key features of this documentation file are (from top to bottom in
+the above code listing):
+
+Each line begins with a `#'` to indicate roxygen2 syntax. First, your
+data set should have a title (`@title`). The `@description` field is an
+optional but highly recommended longer description of the data. For
+example, what were the collection procedures, who were the respondents,
+etc. The `@format` field describes the object (e.g. an R data.frame),
+its dimensions, and then describes all the variables (e.g. `group` and
+`score`). The `@source` field includes the source of the data, which
+could be a citation to an academic article, or a website, for example.
+Finally, the last line should be the name of the data object in
+quotation marks. You can document multiple data files in the same
+`R/data.R` file; simply leave one blank line between them.
+
+To see what the data description looks like in R, type `?exampleData` in
+the R console. As a side note, you can use Markdown syntax in the
+documentation if you include a line with `Roxygen: list(markdown =
+TRUE)` in your package’s `DESCRIPTION`. For more details on creating,
+documenting, and including data sets in R packages, see
+<http://r-pkgs.had.co.nz/data.html>.
+
+## Create functions
+
+Functions in R packages are portable, such that others can install the
+package from their R console, load it, and start using the functions
+immediately. Packages can also depend on other packages (and be depended
+on), such that R automatically installs any requirements for your
+functions to work appropriately. Functions within R packages are
+documented in a standardized manner, and the documentation for a
+function can be viewed in R (e.g. try `?mean`) or online.
+
+Learning and following R conventions for declaring functions has a
+pedagogical benefit to the researcher and may improve their practices.
+There is also a reuse benefit: Functions can be difficult to find in old
+scripts, but easy to find and load if they are called from an existing
+package. Thus, formally including one’s functions in R packages
+facilitates reproducibility and sharing.
+
+To include functions in your package, place the functions’ scripts in
+files in the “R” directory. When you first created your package, that
+directory was created with an example `hello.R` script. Open that file
+in R Studio’s text editor, and delete all the text above the function.
+Then, in the R Studio menu, click “Code” -\> “Insert Roxygen Skeleton”.
+That creates template documentation into the function’s file, which you
+can then manually fill to describe your function. `exampleRPackage`
+includes an example function, whose source looks like this:
+
+    #' Personal greeting
+    #'
+    #' @description Greet a person and appropriately capitalize their name.
+    #'
+    #' @param name Your name (character string; e.g. "john doe").
+    #'
+    #' @return A character string, capitalized to title case.
+    #' @export
+    #'
+    #' @examples
+    #' hello("james bond")
+    hello <- function(name = "your name") {
+        name <- stringr::str_to_title(name)
+        print(paste("Hello,", name))
+    }
+
+This function, as was the data set above, is documented with
+[roxygen2](https://roxygen2.r-lib.org/index.html) syntax. Many of the
+fields are similar from the above section on data documentation. Here,
+we also have `@param` fields, these describe what the function’s
+arguments are. The `@return` field describes what the function will
+return. `@export` indicates that the function should be exported from
+your package; that is, made available when you attach the package with
+`library()`. There is also an `@examples` field that can include
+executable examples of how to use your function. Below the function’s
+description is the actual code.
+
+To try this example function, run `hello("user name")` in R. To view the
+function’s documentation, run `?hello`. For more information on writing
+functions in R packages, see <http://r-pkgs.had.co.nz/r.html>.
+
+## Finish documentation and build package
+
+The example package created as shown above now contains the following
+files and directories (most of which were automatically created):
+
+``` bash
+.
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── NAMESPACE
+├── R
+│   ├── data.R
+│   └── hello.R
+├── data
+│   └── exampleData.rda
+├── data-raw
+│   └── preprocess.R
+└── exampleRPackage.Rproj
+```
+
+Your package is now documented in the DESCRIPTION file, and the
+functions and data are documented in their respective files in the R/
+directory. The data and functions were documented with
+[roxygen2](https://roxygen2.r-lib.org/) syntax, which must subsequently
+be translated into R’s documentation files in the man/ directory, and
+their dependencies must be listed in the NAMESPACE file.
+
+Fortunately, you don’t need to do that manually. First, ensure that R
+Studio generates documentation with roxygen. Go to Tools -\> Project
+Options… -\> Build Tools, and ensure that “Generate documentation with
+roxygen” is checked, and that “Automatically run roxygen when running
+install and restart” is checked in the subsequent “Configure” menu.
+Then, in R Studio’s “Build” tab, click “Install and Restart”.
+
+Doing so automatically writes the documentation in man/, and the
+appropriate dependencies and your package’s exported functions into the
+NAMESPACE file, which you subsequently never need to (or should) edit
+manually. To read more about documenting your data and functions, please
+visit <http://r-pkgs.had.co.nz/man.html>.
+
+Having clicked “Install and Restart” you have also, rather obviously,
+installed your package and restarted R. If, following this tutorial, you
+created the `hello()` function and `exampleData` data sets, they are now
+available to you when the package is attached:
 
 ``` r
-library(exampleRPackage)  # Activate package in current R session
-head(exampleData)  # Display first 6 rows of example data
+library(exampleRPackage)
+hello("my name")
+#> [1] "Hello, My Name"
+head(exampleData)
 #>   group     score
 #> 1     a  97.18260
 #> 2     a  86.87440
@@ -310,101 +391,21 @@ head(exampleData)  # Display first 6 rows of example data
 #> 6     a  94.33976
 ```
 
-### How to download the raw data manually
-
-Although it is not part of the formal R package, we stress that the raw
-data, and possible some form of pre-processed data, should be made
-available to others in a format that does not require R. We therefore
-recommend also including the data in some common format, such as comma
-separated values (`.csv`), in the `data-raw/` folder.
-
-For exampleRPackage, you will find all the raw data as .csv files in the
-[`data-raw/`](https://github.com/mvuorre/exampleRPackage/tree/master/data-raw)
-folder, from where they can be downloaded. That folder also contains
-full pre-processing instructions in the form of an R script.
-
-## Document the package
-
-R users are familiar with reading function documentation by typing
-`?mean` in the R console. That function reveals the documentation page
-for the `mean()` function. By adding a documentation file, your data
-object will also have a documentation page, which is easily accessible
-from within R.
-
-To document your data set, create a file called `data.R` in the `R`
-folder. Then, use R’s (roxygen2 (Wickham, Danenberg, and Eugster 2017))
-documentation syntax to write your data object’s documentation in the
-`R/data.R` file. It will look something like the following for our
-`exampleData` object:
-
-``` r
-#' Scores of Group A and Group B.
-#'
-#' @description A data set with the scores of two groups, Group A and Group B.
-#'     The data were simulated to illustrate how to create R data packages.
-#'
-#' @format A data.frame with 60 rows and 2 variables:
-#' \describe{
-#'   \item{group}{Participant's group, A or B.}
-#'   \item{score}{Participant's score in hypothetical task Z.}
-#' }
-#' @source \url{https://www.github.com/mvuorre/exampleRPackage}
-"exampleData"
-```
-
-The key features of this documentation file are (from top to bottom in
-the above code listing):
-
-Each line begins with a `#'`. The first line is a short description of
-the data. The `@description` field is an optional longer description of
-the data (with indentation if it spans multiple lines). The `@format`
-field describes the object’s type (e.g. an R data.frame), its
-dimensions, and then describes all the variables (e.g. `group` and
-`score`). The `@source` field includes the source of the data, which
-could be a citation to an academic article, for example. Finally, the
-last line should be the name of the data object in quotation marks. You
-can document multiple data files in the same `R/data.R` file; simply
-leave one blank line between them.
-
-Once you are done writing your description, you can use the `document()`
-helper function:
-
-``` r
-document()
-```
-
-This function, from the devtools package, will take what you have
-written and creates machine-readable files in the `man/` folder.
-
-Then go to R Studio’s **Build** tab, and click “Build & Reload”. If
-everything went well, this should build the R package you have just
-created, and loads it into your current R workspace.
-
-It is important to document data well and precisely so there is never
-any ambiguity in the meaning of variables, where the data is from, etc.
-You should therefore spend some time writing documentation files for
-data objects. Once the package has been built, this documentation (for
-`exampleData`) can be viewed in R by calling `?exampleData`:
-
-<img src="exampleData-rdocumentation.png" width="100%" />
-
-## Create functions
-
-\[todo\]
-
 # Advanced (optional) steps
 
 ## Sharing the R package
 
-The easiest way to share the data product is to create the R package as
-a Git repository (see <https://github.com/mvuorre/reproguide-curate> and
-(Vuorre and Curley 2017)) and share it on GitHub. We therefore recommend
-enabling Git (check the “Create a Git repository” button, Figure
-@ref(fig:rstudio-create-pkg)) when creating the project. Once the R
-package’s source code is pushed to GitHub, authorized users (by default,
-anyone) can browse it on GitHub and manually download any files they’d
-like (e.g. the raw data files.) Importantly, they can obtain the data
-with R by installing the R package you have just created:
+### GitHub
+
+The easiest way to share the package is to create the R package as a Git
+repository and share it on GitHub (Vuorre and Curley (2018);
+<https://happygitwithr.com/>; <http://r-pkgs.had.co.nz/git.html>). If
+you followed the tutorial above, Git is already initialized in the
+package’s repository. After connecting the local Git repository to
+GitHub, you can use R Studio’s Git panel to stage, commit, push, and
+pull changes. Once the package’s source code is pushed to GitHub, others
+can install the package. For example, you can install the example
+package created in this tutorial:
 
 ``` r
 devtools::install_github("mvuorre/exampleRPackage")
@@ -415,48 +416,33 @@ The above command, when executed in R, downloads and installs the
 R package’s source code on GitHub:
 <https://github.com/mvuorre/exampleRPackage>.
 
-## Documenting analysis as package vignette
+### Open Science Framework
 
-It is also helpful to share the full analysis code in which the data was
-used. We recommend writing analyses with R Markdown. R Markdown files
-can easily be turned into an *R package vignette*. To initiate a
-vignette, use
+If you have connected the package’s GitHub repository to an OSF project,
+you can also install the package from OSF, as done below for this
+example package:
 
 ``` r
-devtools::use_vignette("Example-Analysis")
+temporary_file <- tempfile(fileext = ".tar.gz")
+download.file("https://osf.io/mqd6f/download", destfile = temporary_file)
+install.packages(temporary_file, repos = NULL)
 ```
-
-This creates a vignette template into the `vignettes/` folder. Write
-your analysis into the `.Rmd` file. See `vignettes/Example-Analysis.Rmd`
-for an example. Writing your analysis into a vignette ensures that users
-of the data also have access to the original analysis of the data.
-Furthermore, vignettes can be built into the package’s website.
 
 ## Creating a website for the R package
 
-\[todo pkgdown is currently broken\]
-
-You can even create a website for the R package. For this, you need the
-[pkgdown](https://hadley.github.io/pkgdown/) R package (Wickham 2017):
+Once the package’s source code is hosted on GitHub, you can showcase its
+contents as a website. For example, you can view exampleRPackage’s
+website at <https://mvuorre.github.io/exampleRPackage/>. To create
+websites from your packages, you need the
+[pkgdown](https://hadley.github.io/pkgdown/) R package (Wickham 2017).
+After installing that package, set up the required files for the
+website:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("hadley/pkgdown")
+use_pkgdown()
 ```
 
-Then, to build your package’s website, you will need to edit the first
-few lines of the `README.Rmd` file, from
-
-    output:
-      md_document:
-        variant: markdown_github
-
-to
-
-    output: rmarkdown::github_document
-
-We expect that in future releases of devtools will eliminate the need
-for manually changing this. To create the website, run:
+Then, To create the website, run:
 
 ``` r
 pkgdown::build_site()
@@ -464,29 +450,51 @@ pkgdown::build_site()
 
 The website is now available at `docs/index.html`. You can open it and
 view it locally. However, you will certainly want to upload the website
-somewhere so that others can access it too.
+somewhere so that others can access it as well. The easiest option is to
+host it on GitHub.
 
-To make the website available to others, you can host it somewhere in
-the internet. The easiest option, again, is to host it on GitHub.
-
-Assuming you have created the package in a local Git repository and have
-synced the repository to GitHub, this is easy. Push all the current
-changes to GitHub, and then go to the package’s GitHub website, click
-“Settings”, and scroll down to “GitHub Pages”. There, click on the
+Here, we assume that you have created the package in a local Git
+repository and have pushed the repository to GitHub. Push all the
+current changes to GitHub, and then go to the package’s GitHub website,
+click “Settings”, and scroll down to “GitHub Pages”. There, click on the
 “Source” pull-down menu that currently says “None”, and choose the
 “master branch /docs folder”. Save the changes. After a little while,
 the page will be visible at <https://username.github.io/packagename>.
 For example, `exampleRPackage`’s website is at
 <https://mvuorre.github.io/exampleRPackage>.
 
-Thank you for reading.
+There are many options for customizing the website; see
+<https://pkgdown.r-lib.org>.
+
+## Other content
+
+Up to this point, our package has contained only code and data. However,
+typical research products make use of those to create narrative
+documents. R packages can contain vignettes, which show example uses of
+the package’s data and functions, and are distributed with the package.
+However, many more kinds of narrative documents can be shared along the
+R package’s source code, and included on the website, such as manuscript
+PDFs created with R Markdown.
+
+Here, we create an article that shows an example analysis of the dataset
+contained in our exampleRPackage. When completed, the document will
+render as a subpage of the package’s website (see above).
+
+``` r
+usethis::use_article("Example-Analysis")
+```
+
+Then, after editing the contents of that file, re-run
+`pkgdown::build_site()`, and the document will be rendered as a webpage
+on the packages website (this example is located at
+<https://mvuorre.github.io/exampleRPackage/articles/Example-Analysis.html>).
 
 # Further Reading
 
 ## Online Resources
 
   - <http://r-pkgs.had.co.nz/>: Website of Hadley Wickham’s R Packages
-    book
+    book (Wickham 2015).
   - [Writing an R package from
     scratch](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/):
     A short and good blog post on how to create minimal R packages
@@ -495,8 +503,7 @@ Thank you for reading.
     The official R documentation on writing R packages. This is the
     complete and definitive set of instructions on how to write R
     packages. It is almost unreadable in it’s comprehensiveness, and
-    unnecessary for small R packages such as the data package described
-    here.
+    unnecessary for small R packages.
 
 ## References
 
@@ -521,45 +528,112 @@ Describing Outputs of Neuroimaging Experiments.” *Scientific Data* 3
 
 </div>
 
-<div id="ref-KitzesPracticeReproducibleResearch2017">
+<div id="ref-HardwickeDataavailabilityreusability2018">
 
-Kitzes, Justin, Daniel Turek, and Fatma Deniz. 2017. *The Practice of
-Reproducible Research: Case Studies and Lessons from the Data-Intensive
-Sciences*. University of California Press.
-<https://www.practicereproducibleresearch.org/>.
-
-</div>
-
-<div id="ref-Munafomanifestoreproduciblescience2017">
-
-Munaf‘o, Marcus R., Brian A. Nosek, Dorothy V. M. Bishop, Katherine S.
-Button, Christopher D. Chambers, Nathalie Percie du Sert, Uri Simonsohn,
-Eric-Jan Wagenmakers, Jennifer J. Ware, and John P. A. Ioannidis. 2017.
-“A Manifesto for Reproducible Science.” *Nature Human Behaviour* 1
-(January): 0021. <https://doi.org/10.1038/s41562-016-0021>.
+Hardwicke, Tom E., Maya B. Mathur, Kyle MacDonald, Gustav Nilsonne,
+George C. Banks, Mallory C. Kidwell, Alicia Hofelich Mohr, et al. 2018.
+“Data Availability, Reusability, and Analytic Reproducibility:
+Evaluating the Impact of a Mandatory Open Data Policy at the Journal
+Cognition.” *Royal Society Open Science* 5 (8): 180448.
+<https://doi.org/10.1098/rsos.180448>.
 
 </div>
 
-<div id="ref-RCoreTeamLanguageEnvironmentStatistical2017">
+<div id="ref-HoutkoopDataSharingPsychology2018">
 
-R Core Team. 2017. *R: A Language and Environment for Statistical
-Computing*. Vienna, Austria: R Foundation for Statistical Computing.
-<https://www.R-project.org/>.
-
-</div>
-
-<div id="ref-RStudioTeamRStudioIntegratedDevelopment2016">
-
-RStudio Team. 2016. *RStudio: Integrated Development Environment for R*.
-Boston, MA: RStudio, Inc. <http://www.rstudio.com/>.
+Houtkoop, Bobby Lee, Chris Chambers, Malcolm Macleod, Dorothy V. M.
+Bishop, Thomas E. Nichols, and Eric-Jan Wagenmakers. 2018. “Data Sharing
+in Psychology: A Survey on Barriers and Preconditions.” *Advances in
+Methods and Practices in Psychological Science* 1 (1): 70–85.
+<https://doi.org/10.1177/2515245917751886>.
 
 </div>
 
-<div id="ref-vuorre_curating_2017">
+<div id="ref-KleinPracticalGuideTransparency2018">
 
-Vuorre, Matti, and James P. Curley. 2017. “Curating Research Assets in
-Behavioral Sciences: A Tutorial on the Git Version Control System.”
-*PsyArXiv Preprints*, June. <https://doi.org/10.17605/OSF.IO/TXGN8>.
+Klein, Olivier, Tom E. Hardwicke, Frederik Aust, Johannes Breuer, Henrik
+Danielsson, Alicia Hofelich Mohr, Hans Ijzerman, Gustav Nilsonne, Wolf
+Vanpaemel, and Michael C. Frank. 2018. “A Practical Guide for
+Transparency in Psychological Science.” *Collabra: Psychology* 4 (1):
+20. <https://doi.org/10.1525/collabra.158>.
+
+</div>
+
+<div id="ref-LindsaySharingDataMaterials2017">
+
+Lindsay, D. Stephen. 2017. “Sharing Data and Materials in Psychological
+Science.” *Psychological Science* 28 (6): 699–702.
+<https://doi.org/10.1177/0956797617704015>.
+
+</div>
+
+<div id="ref-MartoneDatasharingpsychology2018">
+
+Martone, Maryann E., Alexander Garcia-Castro, and Gary R. VandenBos.
+2018. “Data Sharing in Psychology.” *American Psychologist* 73 (2):
+111–25. <https://doi.org/10.1037/amp0000242>.
+
+</div>
+
+<div id="ref-morey_peer_2016">
+
+Morey, Richard D., Christopher D. Chambers, Peter J. Etchells, Christine
+R. Harris, Rink Hoekstra, Daniël Lakens, Stephan Lewandowsky, et al.
+2016. “The Peer Reviewers Openness Initiative: Incentivizing Open
+Research Practices Through Peer Review.” *Royal Society Open Science* 3
+(1): 150547. <https://doi.org/10.1098/rsos.150547>.
+
+</div>
+
+<div id="ref-nosek_promoting_2015">
+
+Nosek, Brian A., G. Alter, G. C. Banks, D. Borsboom, S. D. Bowman, S. J.
+Breckler, S. Buck, et al. 2015. “Promoting an Open Research Culture.”
+*Science* 348 (6242): 1422–5. <https://doi.org/10.1126/science.aab2374>.
+
+</div>
+
+<div id="ref-Rouderwhatwhyhow2016">
+
+Rouder, Jeffrey N. 2016. “The What, Why, and How of Born-Open Data.”
+*Behavior Research Methods* 48 (3): 1062–9.
+<https://doi.org/10.3758/s13428-015-0630-z>.
+
+</div>
+
+<div id="ref-RouderMinimizingMistakesPsychological2019">
+
+Rouder, Jeffrey N., Julia M. Haaf, and Hope K. Snyder. 2019. “Minimizing
+Mistakes in Psychological Science.” *Advances in Methods and Practices
+in Psychological Science* 2 (1): 3–11.
+<https://doi.org/10.1177/2515245918801915>.
+
+</div>
+
+<div id="ref-VanpaemelAreWeWasting2015">
+
+Vanpaemel, Wolf, Maarten Vermorgen, Leen Deriemaecker, and Gert Storms.
+2015. “Are We Wasting a Good Crisis? The Availability of Psychological
+Research Data After the Storm.” *Collabra: Psychology* 1 (1): Art. 3.
+<https://doi.org/10.1525/collabra.13>.
+
+</div>
+
+<div id="ref-VuorreCuratingResearchAssets2018">
+
+Vuorre, Matti, and James P. Curley. 2018. “Curating Research Assets: A
+Tutorial on the Git Version Control System.” *Advances in Methods and
+Practices in Psychological Science* 1 (2): 219–36.
+<https://doi.org/10.1177/2515245918754826>.
+
+</div>
+
+<div id="ref-Wichertspooravailabilitypsychological2006">
+
+Wicherts, Jelte M., Denny Borsboom, Judith Kats, and Dylan Molenaar.
+2006. “The Poor Availability of Psychological Research Data for
+Reanalysis.” *American Psychologist* 61 (7): 726–28.
+<https://doi.org/10.1037/0003-066X.61.7.726>.
 
 </div>
 
@@ -570,18 +644,10 @@ Package*. <https://github.com/hadley/pkgdown>.
 
 </div>
 
-<div id="ref-wickham_r_2015">
+<div id="ref-WickhamPackagesOrganizeTest2015">
 
 ———. 2015. *R Packages: Organize, Test, Document, and Share Your Code*.
 "O’Reilly Media, Inc.". <http://r-pkgs.had.co.nz/>.
-
-</div>
-
-<div id="ref-wickham_devtools:_2017">
-
-Wickham, Hadley, and Winston Chang. 2017. *Devtools: Tools to Make
-Developing R Packages Easier*.
-<https://CRAN.R-project.org/package=devtools>.
 
 </div>
 
@@ -593,14 +659,14 @@ In-Line Documentation for R*.
 
 </div>
 
-<div id="ref-yee_why_2017">
+<div id="ref-WilkinsonFAIRGuidingPrinciples2016">
 
-Yee, Sara J. Weston, and Debbie. 2017. “Why You Should Become a UseR: A
-Brief Introduction to R.” *APS Observer* 30 (3).
-<https://www.psychologicalscience.org/observer/why-you-should-become-a-user-a-brief-introduction-to-r>.
+Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg,
+Gabrielle Appleton, Myles Axton, Arie Baak, Niklas Blomberg, et al.
+2016. “The FAIR Guiding Principles for Scientific Data Management and
+Stewardship.” *Scientific Data* 3 (March): 160018.
+<https://doi.org/10.1038/sdata.2016.18>.
 
 </div>
 
 </div>
-
-1.  <https://daringfireball.net/projects/markdown/>

@@ -9,10 +9,13 @@ Description: This package is an example R package.
 URL: https://github.com/mvuorre/exampleRPackage/
 BugReports: http://github.com/mvuorre/exampleRPackage/issues/
 License: MIT + file LICENSE
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.1)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
-Suggests: knitr,
+Roxygen: list(markdown = TRUE)
+Suggests: 
+    knitr,
     rmarkdown
-VignetteBuilder: knitr
+Imports:
+    stringr
