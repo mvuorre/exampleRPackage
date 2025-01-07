@@ -1,9 +1,9 @@
-pandoc: 2.9.1.1
-pkgdown: 1.4.1
+pandoc: '3.6'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   Example-article: Example-article.html
+last_built: 2025-01-07T16:25Z
 urls:
   reference: http://mvuorre.github.io/exampleRPackage/reference
   article: http://mvuorre.github.io/exampleRPackage/articles
-

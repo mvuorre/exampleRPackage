@@ -1,17 +1,17 @@
+home:
+  title: Example R Package
+  description: An example R package with good practices.
 url: http://mvuorre.github.io/exampleRPackage
-title: Example R Package
 destination: docs
 development:
   mode: release
 template:
-  params:
-    bootswatch: spacelab
+  bootstrap: 5
 navbar:
   structure:
     left:  [home, articles, reference, news]
     right: [github]
 components:
-  home: ~
   articles:
     text: Articles
     menu:

@@ -8,6 +8,10 @@ communicate scientific research products and metadata. Browse its
 [source code](https://github.com/mvuorre/exampleRPackage), or read this
 document for a tutorial on creating R packages.
 
+Note: This aims to be a concise example and introduction, consult
+**<https://r-pkgs.org/>** for the definitive guide on R package
+development.
+
 # Introduction
 
 Research projects produce experiments, data, analyses, manuscripts,
@@ -59,31 +63,31 @@ analysis code embedded in narrative documents.
 The outline of this tutorial is as follows:
 
 1.  Create a new R package with R Studio
-      - Set up the fundamental package infrastructure
+    - Set up the fundamental package infrastructure
 2.  Describe the package
-      - Edit DESCRIPTION and readme files
+    - Edit DESCRIPTION and readme files
 3.  Add data to package
-      - Add raw data, preprocessing scripts, and an R data object
+    - Add raw data, preprocessing scripts, and an R data object
 4.  Create and add functions
-      - Create and document functions
-      - Dependencies
+    - Create and document functions
+    - Dependencies
 5.  Document the package
-      - Describe the package, its functions, and data, in a machine- and
-        human-readable format
+    - Describe the package, its functions, and data, in a machine- and
+      human-readable format
 
 After these steps, you will have a functional R package on your
 computer. Then, we will talk about sharing and showcasing your package
 online.
 
-  - Sharing the package
-      - Upload to GitHub to make your package (and its source code)
-        available
-      - Connect to Open Science Framework
-  - Create a website for the package
-      - Showcase your R package online with a website
-  - Add narrative documents
-      - Describe how to use your data and functions (e.g. manuscripts,
-        supplementary analysis files)
+- Sharing the package
+  - Upload to GitHub to make your package (and its source code)
+    available
+  - Connect to Open Science Framework
+- Create a website for the package
+  - Showcase your R package online with a website
+- Add narrative documents
+  - Describe how to use your data and functions (e.g. manuscripts,
+    supplementary analysis files)
 
 ## Create a package with R Studio
 
@@ -489,34 +493,35 @@ Markdown](https://rmarkdown.rstudio.com/) websites.
 
 ## Online Resources
 
-  - <http://r-pkgs.had.co.nz/>: Website of Hadley Wickham’s R Packages
-    book (Wickham 2015).
-  - [Writing an R package from
-    scratch](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/):
-    A short and good blog post on how to create minimal R packages
-  - [Writing R
-    Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html):
-    The official R documentation on writing R packages. This is the
-    complete and definitive set of instructions on how to write R
-    packages. It is almost unreadable in it’s comprehensiveness, and
-    unnecessary for small R packages.
-  - <https://happygitwithr.com/>: A guide for using Git with R and R
-    Studio
+- <http://r-pkgs.had.co.nz/>: Website of Hadley Wickham’s R Packages
+  book (Wickham 2015).
+- [Writing an R package from
+  scratch](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/):
+  A short and good blog post on how to create minimal R packages
+- [Writing R
+  Extensions](https://cran.r-project.org/doc/manuals/r-release/R-exts.html):
+  The official R documentation on writing R packages. This is the
+  complete and definitive set of instructions on how to write R
+  packages. It is almost unreadable in it’s comprehensiveness, and
+  unnecessary for small R packages.
+- <https://happygitwithr.com/>: A guide for using Git with R and R
+  Studio
 
 ## References
 
-<div id="refs" class="references">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 
-<div id="ref-allaire_rmarkdown:_2016">
+<div id="ref-allaire_rmarkdown:_2016" class="csl-entry">
 
 Allaire, J. J., Joe Cheng, Yihui Xie, Jonathan McPherson, Winston Chang,
-Jeff Allen, Hadley Wickham, and Rob Hyndman. 2016. *Rmarkdown: Dynamic
-Documents for R* (version 1.3).
+Jeff Allen, Hadley Wickham, and Rob Hyndman. 2016. “Rmarkdown: Dynamic
+Documents for R.”
 <https://cran.r-project.org/web/packages/rmarkdown/index.html>.
 
 </div>
 
-<div id="ref-gorgolewski_brain_2016">
+<div id="ref-gorgolewski_brain_2016" class="csl-entry">
 
 Gorgolewski, Krzysztof J., Tibor Auer, Vince D. Calhoun, R. Cameron
 Craddock, Samir Das, Eugene P. Duff, Guillaume Flandin, et al. 2016.
@@ -526,7 +531,8 @@ Describing Outputs of Neuroimaging Experiments.” *Scientific Data* 3
 
 </div>
 
-<div id="ref-HardwickeDataavailabilityreusability2018">
+<div id="ref-HardwickeDataavailabilityreusability2018"
+class="csl-entry">
 
 Hardwicke, Tom E., Maya B. Mathur, Kyle MacDonald, Gustav Nilsonne,
 George C. Banks, Mallory C. Kidwell, Alicia Hofelich Mohr, et al. 2018.
@@ -537,7 +543,7 @@ Cognition.” *Royal Society Open Science* 5 (8): 180448.
 
 </div>
 
-<div id="ref-HoutkoopDataSharingPsychology2018">
+<div id="ref-HoutkoopDataSharingPsychology2018" class="csl-entry">
 
 Houtkoop, Bobby Lee, Chris Chambers, Malcolm Macleod, Dorothy V. M.
 Bishop, Thomas E. Nichols, and Eric-Jan Wagenmakers. 2018. “Data Sharing
@@ -547,7 +553,7 @@ Methods and Practices in Psychological Science* 1 (1): 70–85.
 
 </div>
 
-<div id="ref-KleinPracticalGuideTransparency2018">
+<div id="ref-KleinPracticalGuideTransparency2018" class="csl-entry">
 
 Klein, Olivier, Tom E. Hardwicke, Frederik Aust, Johannes Breuer, Henrik
 Danielsson, Alicia Hofelich Mohr, Hans Ijzerman, Gustav Nilsonne, Wolf
@@ -557,7 +563,7 @@ Transparency in Psychological Science.” *Collabra: Psychology* 4 (1):
 
 </div>
 
-<div id="ref-LindsaySharingDataMaterials2017">
+<div id="ref-LindsaySharingDataMaterials2017" class="csl-entry">
 
 Lindsay, D. Stephen. 2017. “Sharing Data and Materials in Psychological
 Science.” *Psychological Science* 28 (6): 699–702.
@@ -565,7 +571,7 @@ Science.” *Psychological Science* 28 (6): 699–702.
 
 </div>
 
-<div id="ref-MartoneDatasharingpsychology2018">
+<div id="ref-MartoneDatasharingpsychology2018" class="csl-entry">
 
 Martone, Maryann E., Alexander Garcia-Castro, and Gary R. VandenBos.
 2018. “Data Sharing in Psychology.” *American Psychologist* 73 (2):
@@ -573,7 +579,7 @@ Martone, Maryann E., Alexander Garcia-Castro, and Gary R. VandenBos.
 
 </div>
 
-<div id="ref-morey_peer_2016">
+<div id="ref-morey_peer_2016" class="csl-entry">
 
 Morey, Richard D., Christopher D. Chambers, Peter J. Etchells, Christine
 R. Harris, Rink Hoekstra, Daniël Lakens, Stephan Lewandowsky, et al.
@@ -583,23 +589,25 @@ Research Practices Through Peer Review.” *Royal Society Open Science* 3
 
 </div>
 
-<div id="ref-nosek_promoting_2015">
+<div id="ref-nosek_promoting_2015" class="csl-entry">
 
 Nosek, Brian A., G. Alter, G. C. Banks, D. Borsboom, S. D. Bowman, S. J.
 Breckler, S. Buck, et al. 2015. “Promoting an Open Research Culture.”
-*Science* 348 (6242): 1422–5. <https://doi.org/10.1126/science.aab2374>.
+*Science* 348 (6242): 1422–25.
+<https://doi.org/10.1126/science.aab2374>.
 
 </div>
 
-<div id="ref-Rouderwhatwhyhow2016">
+<div id="ref-Rouderwhatwhyhow2016" class="csl-entry">
 
 Rouder, Jeffrey N. 2016. “The What, Why, and How of Born-Open Data.”
-*Behavior Research Methods* 48 (3): 1062–9.
+*Behavior Research Methods* 48 (3): 1062–69.
 <https://doi.org/10.3758/s13428-015-0630-z>.
 
 </div>
 
-<div id="ref-RouderMinimizingMistakesPsychological2019">
+<div id="ref-RouderMinimizingMistakesPsychological2019"
+class="csl-entry">
 
 Rouder, Jeffrey N., Julia M. Haaf, and Hope K. Snyder. 2019. “Minimizing
 Mistakes in Psychological Science.” *Advances in Methods and Practices
@@ -608,7 +616,7 @@ in Psychological Science* 2 (1): 3–11.
 
 </div>
 
-<div id="ref-VanpaemelAreWeWasting2015">
+<div id="ref-VanpaemelAreWeWasting2015" class="csl-entry">
 
 Vanpaemel, Wolf, Maarten Vermorgen, Leen Deriemaecker, and Gert Storms.
 2015. “Are We Wasting a Good Crisis? The Availability of Psychological
@@ -617,7 +625,7 @@ Research Data After the Storm.” *Collabra: Psychology* 1 (1): Art. 3.
 
 </div>
 
-<div id="ref-VuorreCuratingResearchAssets2018">
+<div id="ref-VuorreCuratingResearchAssets2018" class="csl-entry">
 
 Vuorre, Matti, and James P. Curley. 2018. “Curating Research Assets: A
 Tutorial on the Git Version Control System.” *Advances in Methods and
@@ -626,7 +634,8 @@ Practices in Psychological Science* 1 (2): 219–36.
 
 </div>
 
-<div id="ref-Wichertspooravailabilitypsychological2006">
+<div id="ref-Wichertspooravailabilitypsychological2006"
+class="csl-entry">
 
 Wicherts, Jelte M., Denny Borsboom, Judith Kats, and Dylan Molenaar.
 2006. “The Poor Availability of Psychological Research Data for
@@ -635,21 +644,21 @@ Reanalysis.” *American Psychologist* 61 (7): 726–28.
 
 </div>
 
-<div id="ref-wickham_pkgdown:_2017">
+<div id="ref-WickhamPackagesOrganizeTest2015" class="csl-entry">
 
-Wickham, Hadley. 2017. *Pkgdown: Make Static HTML Documentation for a
-Package*. <https://github.com/hadley/pkgdown>.
-
-</div>
-
-<div id="ref-WickhamPackagesOrganizeTest2015">
-
-———. 2015. *R Packages: Organize, Test, Document, and Share Your Code*.
-"O’Reilly Media, Inc.". <http://r-pkgs.had.co.nz/>.
+Wickham, Hadley. 2015. *R Packages: Organize, Test, Document, and Share
+Your Code*. "O’Reilly Media, Inc.". <http://r-pkgs.had.co.nz/>.
 
 </div>
 
-<div id="ref-wickham_roxygen2:_2017">
+<div id="ref-wickham_pkgdown:_2017" class="csl-entry">
+
+———. 2017. *Pkgdown: Make Static HTML Documentation for a Package*.
+<https://github.com/hadley/pkgdown>.
+
+</div>
+
+<div id="ref-wickham_roxygen2:_2017" class="csl-entry">
 
 Wickham, Hadley, Peter Danenberg, and Manuel Eugster. 2017. *Roxygen2:
 In-Line Documentation for R*.
@@ -657,7 +666,7 @@ In-Line Documentation for R*.
 
 </div>
 
-<div id="ref-WilkinsonFAIRGuidingPrinciples2016">
+<div id="ref-WilkinsonFAIRGuidingPrinciples2016" class="csl-entry">
 
 Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg,
 Gabrielle Appleton, Myles Axton, Arie Baak, Niklas Blomberg, et al.
