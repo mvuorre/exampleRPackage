@@ -8,3 +8,4 @@
 ^pkgdown$
 ^references\.bib$
 ^vignettes/Example-article\.Rmd$
+^LICENSE\.md$
