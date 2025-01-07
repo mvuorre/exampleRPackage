@@ -10,7 +10,7 @@ Authors@R:
         comment = c(ORCID = "0000-0001-5052-066X")
     )
 Description: This package is an example R package.
-URL: https://github.com/mvuorre/exampleRPackage/
+URL: https://github.com/mvuorre/exampleRPackage/, http://mvuorre.github.io/exampleRPackage
 BugReports: http://github.com/mvuorre/exampleRPackage/issues/
 License: MIT + file LICENSE
 Depends: R (>= 3.1)
