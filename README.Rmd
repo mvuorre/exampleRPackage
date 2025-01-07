@@ -20,6 +20,8 @@ library(knitr)
 
 exampleRPackage shows how R packages can be used to store and communicate scientific research products and metadata. Browse its [source code](https://github.com/mvuorre/exampleRPackage), or read this document for a tutorial on creating R packages.
 
+Note: This aims to be a concise example and introduction, consult **<https://r-pkgs.org/>** for the definitive guide on R package development.
+
 # Introduction
 
 Research projects produce experiments, data, analyses, manuscripts, posters, slides, stimuli and materials, computational models, and more. However, the potential added value of these products is not fully realized due to limited sharing and curating practices. Although more transparent communication of these research products has recently been encouraged [@HoutkoopDataSharingPsychology2018; @LindsaySharingDataMaterials2017; @VanpaemelAreWeWasting2015; @Wichertspooravailabilitypsychological2006; @KleinPracticalGuideTransparency2018; @MartoneDatasharingpsychology2018; @RouderMinimizingMistakesPsychological2019; @Rouderwhatwhyhow2016], these efforts often focus narrowly on sharing data (and sometimes analysis code). Further, the practical value of sharing is often limited by poor documentation, incompatible file formats, and lack of organization, resulting in low rates of reproducibility [@HardwickeDataavailabilityreusability2018]. Standardization of protocols for sharing would be beneficial; but, such standards have not yet emerged. Instead of developing another standard, we suggest borrowing existing standards and practices from software engineering. Specifically, the R package standard, with additional R authoring tools, provides a robust framework for organizing and sharing reproducible research products.
